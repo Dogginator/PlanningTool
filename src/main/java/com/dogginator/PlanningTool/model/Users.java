@@ -23,10 +23,7 @@ public class Users {
     @GeneratedValue
     private int id;
 
-    @Column(length = 25, nullable = false, name ="fist_Name" )
-    private String firstName;
-    @Column(length = 25, nullable = false, name ="last_Name" )
-    private String lastName;
+
     @Column(length = 25, nullable = false, unique = true, name ="email" )
     private String email;
     @Column(length = 25, nullable = false, unique = true, name ="user_Name" )
@@ -41,9 +38,7 @@ public class Users {
     private String roles;
 
 
-    public Users(String firstName, String lastName, String email, String userName, String password, String secret, String roles ){
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Users(String email, String userName, String password, String secret, String roles ){
         this.email = email;
         this.userName = userName;
         this.password = password;
