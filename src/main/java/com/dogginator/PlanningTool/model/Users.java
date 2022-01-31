@@ -6,17 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-
-@Entity(name = "Users")
+@Table(catalog = "Users")
+@Entity
 public class Users {
 
     @Id
@@ -30,19 +28,20 @@ public class Users {
     private String userName;
     @Column(length = 15, nullable = false, name ="password" )
     private String password;
-    private String rePassword;
-    private String oldPassword;
-
     private String secret;
     @Column(length = 10, nullable = false, name ="roles" )
     private String roles;
 
+    @OneToMany(targetEntity = Days.class, cascade = CascadeType.ALL)
+    private List days;
 
-    public Users(String email, String userName, String password, String secret, String roles ){
+
+    public Users(String email, String userName, String password, String secret, String roles, List days ){
         this.email = email;
         this.userName = userName;
         this.password = password;
         this.secret = secret;
         this.roles = roles;
+        this.days = days;
     }
 }

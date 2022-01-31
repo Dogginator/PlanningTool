@@ -1,25 +1,22 @@
 package com.dogginator.PlanningTool.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-
-public class Days {
+@Table(catalog = "Days")
+@Entity
+public class Days  {
 
     @Id
     @GeneratedValue
-    private int id;
+    private int dayId;
 
     @Column(length = 15, nullable = false, name ="day" )
     private String day;
@@ -30,6 +27,14 @@ public class Days {
     @Column(length = 5, nullable = false, name ="time" )
     private int time;
 
+    @ManyToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "users_ID")
+    private Users users;
+
+    public  Days(){
+        super();
+    }
+
 
     public Days(String day,
                 String date,
@@ -37,6 +42,7 @@ public class Days {
                 int time
 
     ){
+        super();
         this.day = day;
         this.date = date;
         this.event = event;

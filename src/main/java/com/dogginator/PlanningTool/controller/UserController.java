@@ -41,7 +41,7 @@ public class UserController {
         try{
             userService.createUser(user);
             return "dashboard"; // TODO Create a landing Page for users
-        }catch (UserNameException e){
+        }catch (ThrowExceptionMessage e){
            ra.addFlashAttribute("message", e.getMessage());
            return "redirect:/createAccount";
         }
