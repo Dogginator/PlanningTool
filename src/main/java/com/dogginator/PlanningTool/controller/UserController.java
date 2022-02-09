@@ -32,7 +32,7 @@ public class UserController {
     @RequestMapping(value = "/createAccount", method = RequestMethod.GET)
     public String postAccount(Model model){
         model.addAttribute("user", new Users());
-        return "createAccount"; // TODO Create Account Page + landing page
+        return "CreateAccount"; // TODO Create Account Page + landing page
     }
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.POST)
@@ -40,7 +40,7 @@ public class UserController {
         model.addAttribute("user", user);
         try{
             userService.createUser(user);
-            return "dashboard"; // TODO Create a landing Page for users
+            return "DashBoard";
         }catch (ThrowExceptionMessage e){
            ra.addFlashAttribute("message", e.getMessage());
            return "redirect:/createAccount";

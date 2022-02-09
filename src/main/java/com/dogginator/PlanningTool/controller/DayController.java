@@ -58,23 +58,35 @@ private Days day;
                    thirdDay = dayService.findAllEventOnDay(dateAndDayCheck.planningCheck(day.isThisWeek()));
                    model.addAttribute("thirdDay", thirdDay);
                }
-               case 3 -> fourthDay = dayService.findAllEventOnDay(dateAndDayCheck.planningCheck(false));
-               case 4 -> fifthDay = dayService.findAllEventOnDay(dateAndDayCheck.planningCheck(false));
-               case 5 -> sixthDay = dayService.findAllEventOnDay(dateAndDayCheck.planningCheck(false));
-               case 6 -> seventhDay = dayService.findAllEventOnDay(dateAndDayCheck.planningCheck(false));
+               case 3 -> {
+                   fourthDay = dayService.findAllEventOnDay(dateAndDayCheck.planningCheck(false));
+                   model.addAttribute("secondDay", fourthDay);
+               }
+               case 4 -> {
+                   fifthDay = dayService.findAllEventOnDay(dateAndDayCheck.planningCheck(false));
+                   model.addAttribute("secondDay", fifthDay);
+               }
+               case 5 -> {
+                   sixthDay = dayService.findAllEventOnDay(dateAndDayCheck.planningCheck(false));
+                   model.addAttribute("secondDay", sixthDay);
+               }
+               case 6 -> {
+                   seventhDay = dayService.findAllEventOnDay(dateAndDayCheck.planningCheck(false));
+                   model.addAttribute("secondDay", seventhDay);
+               }
            }
         }
         return "weekly";// TODO set up weekly and look in to how to do more and less tables to display in frontend
     }
 
     @RequestMapping(value = "/user/week", method = RequestMethod.GET)
-    public void getCurrentWeek(Model model){
+    public void upDateDay(Model model){
         //List<Days> listWeek = dayService.findTotalWeek();// TODO how to set up a Week?
     }
     @RequestMapping(value = "/user/remove/plan/{id}")
     public String removeDay(@PathVariable("id")Integer id ){
         dayService.deleteDay(id);
-        return "?"; // TODO figure out what this method..
+        return "dashboard"; // TODO figure out what this method..
     }
 
 }

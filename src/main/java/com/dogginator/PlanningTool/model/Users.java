@@ -28,19 +28,17 @@ public class Users {
     private String userName;
     @Column(length = 15, nullable = false, name ="password" )
     private String password;
-    private String secret;
     @Column(length = 10, nullable = false, name ="roles" )
     private String roles;
 
     @OneToMany(targetEntity = Days.class, cascade = CascadeType.ALL)
-    private List days;
+    private List<Days> days;
 
 
-    public Users(String email, String userName, String password, String secret, String roles, List days ){
+    public Users(String email, String userName, String password, String roles, List<Days> days ){
         this.email = email;
         this.userName = userName;
         this.password = password;
-        this.secret = secret;
         this.roles = roles;
         this.days = days;
     }
