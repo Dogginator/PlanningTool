@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class PanningCheck {
+public class DateAndDayCheck {
     private Days day;
     private final String
             mon = "MONDAY",
@@ -112,7 +112,7 @@ public class PanningCheck {
         }
 
     private List<String> weekDates(List<String> checkThis){// For getting the Right date for data
-    for(int i = 1; i < checkThis.size(); ++i){
+    for(int i = 1; i < checkThis.size()+1; ++i){
         Date currentDate1 = new Date();
         LocalDateTime localDateTime1 = currentDate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         localDateTime1 = localDateTime1.plusDays(i);

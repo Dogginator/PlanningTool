@@ -6,7 +6,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-
+// TODO See if @ManyToOne is whats needed and that it works (test)
 @Getter
 @Setter
 @ToString
@@ -27,6 +27,8 @@ public class Days  {
     @Column(length = 5, nullable = false, name ="time" )
     private int time;
 
+    private boolean thisWeek = false; // TODO hardcoded for now (create an option for user)
+
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "users_ID")
     private Users users;
@@ -39,7 +41,8 @@ public class Days  {
     public Days(String day,
                 String date,
                 String event,
-                int time
+                int time,
+                boolean thisWeek
 
     ){
         super();
@@ -47,5 +50,6 @@ public class Days  {
         this.date = date;
         this.event = event;
         this.time = time;
+        this.thisWeek = thisWeek;
     }
 }
