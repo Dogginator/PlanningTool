@@ -10,9 +10,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@Table(catalog = "Days")
+@Table(catalog = "Event")
 @Entity
-public class Days  {
+public class Event {
 
     @Id
     @GeneratedValue
@@ -24,22 +24,22 @@ public class Days  {
     private String date;
     @Column(length = 25, nullable = false, name ="event" )
     private String event;
-    @Column(length = 5, nullable = false, name ="time" )
+    @Column(length = 1, nullable = false, name ="time" )
     private int time;
 
-    @ManyToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "users_ID")
-    private Users users;
+    private boolean thisWeek = false; // TODO hardcoded for now (create an option for user)
 
-    public  Days(){
+
+    public Event(){
         super();
     }
 
 
-    public Days(String day,
-                String date,
-                String event,
-                int time
+    public Event(String day,
+                 String date,
+                 String event,
+                 int time,
+                 boolean thisWeek
 
     ){
         super();
@@ -47,5 +47,6 @@ public class Days  {
         this.date = date;
         this.event = event;
         this.time = time;
+        this.thisWeek = thisWeek;
     }
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>App Fragments</title>
+</head>
+<body>
+<!-- planning Navigator -->
+<ul th:fragment = "nav-planning">
+    <li><a th:href="@{/DashBoard}">Home</a></li>
+    <li><a th:href="@{/planning}"></a></li>
+    <li><a th:href="@{/Daily}"></a></li>
+</ul>
+
+<div th:fragment="copyright">
+    &copy; PlanningTool
+</div>
+</body>
+</html>
