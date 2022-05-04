@@ -6,13 +6,13 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-// TODO See if @ManyToOne is whats needed and that it works (test)
+
 @Getter
 @Setter
 @ToString
-@Table(catalog = "Days")
+@Table(catalog = "Event")
 @Entity
-public class Days  {
+public class Event {
 
     @Id
     @GeneratedValue
@@ -24,25 +24,22 @@ public class Days  {
     private String date;
     @Column(length = 25, nullable = false, name ="event" )
     private String event;
-    @Column(length = 5, nullable = false, name ="time" )
+    @Column(length = 1, nullable = false, name ="time" )
     private int time;
 
     private boolean thisWeek = false; // TODO hardcoded for now (create an option for user)
 
-    @ManyToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name = "users_ID")
-    private Users users;
 
-    public  Days(){
+    public Event(){
         super();
     }
 
 
-    public Days(String day,
-                String date,
-                String event,
-                int time,
-                boolean thisWeek
+    public Event(String day,
+                 String date,
+                 String event,
+                 int time,
+                 boolean thisWeek
 
     ){
         super();

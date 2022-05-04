@@ -29,14 +29,34 @@
     Home Nav
 </div>
 
-<div id="home-main-content" >
-    <p th:text="'Name:' + ${user.userName}"></p>
-    <br>
-    <p th:text="'Email:' + ${user.email}"></p>
-    <br>
-    <div th:if="${message}" class="alert alert-success text-center">
-        [[${message}]]
-    </div>
+<div>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>DayId</th>
+            <th>Day</th>
+            <th>Date</th>
+            <th>Event</th>
+            <th>time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="event : ${listEvent}">
+            <tr>
+                <td>[[${event.dayId}]]</td>
+                <td>[[${user.day}]]</td>
+                <td>[[${user.date}]]</td>
+                <td>[[${user.event}]]</td>
+                <td>[[${user.time}]]</td>
+                <td>
+                    <a class="h4 mr-3" th:href="@{'/users/updateUser/' + ${user.id}}">Edit</a>
+                    <a class="h4"th:href="@{'/users/delete/' + ${user.id}}">Delete</a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+
+    </table>
 </div>
 <div id="home-footer" th:replace="~{/fragments/app-fragments :: copyright}">
     Footer

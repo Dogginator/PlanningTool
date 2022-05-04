@@ -5,27 +5,13 @@
     <title>App Fragments</title>
 </head>
 <body>
-<!-- Default Navigator -->
-<ul th:fragment = "nav-default">
-    <li><a th:href="@{/login}">Log-In</a></li>
-    <li><a th:href="@{/createAccount}">Create Account</a></li>
-</ul>
-<!-- Login Navigator -->
-<ul th:fragment = "nav-login">
-    <li><a th:href="@{/DashBoard}">Home</a></li>
-    <li><a th:href="@{/planning}">Plan an event</a></li>
-    <li><a th:href="@{/Daily}"></a></li>
-</ul>
 <!-- planning Navigator -->
 <ul th:fragment = "nav-planning">
     <li><a th:href="@{/DashBoard}">Home</a></li>
     <li><a th:href="@{/planning}"></a></li>
     <li><a th:href="@{/Daily}"></a></li>
 </ul>
-<!-- Admin Navigator -->
-<ul th:fragment = "nav-admin">
-    <li><a th:href="@{/users}">Handle Users</a></li>
-</ul>
+
 <div th:fragment="copyright">
     &copy; PlanningTool
 </div>

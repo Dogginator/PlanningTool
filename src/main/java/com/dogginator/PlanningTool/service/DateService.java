@@ -1,7 +1,7 @@
-package com.dogginator.PlanningTool.logic;
+package com.dogginator.PlanningTool.service;
 
-import com.dogginator.PlanningTool.model.Days;
-
+import com.dogginator.PlanningTool.model.Event;
+import org.springframework.stereotype.Service;
 
 
 import java.text.DateFormat;
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
-public class DateAndDayCheck {
-    private Days day;
+@Service
+public class DateService {
+    private Event day;
     private final String
             mon = "MONDAY",
             tue = "TUESDAY",
@@ -35,7 +35,7 @@ public class DateAndDayCheck {
 
     public String planningCheck(Boolean checkWeek){ //Basic logic for Saving Events
         if(day.getDay().equalsIgnoreCase(currentDay)){
-            if(checkWeek){
+            if(checkWeek.equals(true)){
                 plannedDate = addDaysToDate(7);
             }else {
                 plannedDate = addDaysToDate(0);
@@ -91,27 +91,27 @@ public class DateAndDayCheck {
             case fri -> {
                 week.add("Saturday");
                 week.add("Sunday");
-                weekDates(week);
+                dates = weekDates(week);
             }
             case sat -> {
                 week.add("Sunday");
-                weekDates(week);
+                dates = weekDates(week);
             }
             case sun -> { // next week
-                week.add("monday");
+                week.add("Monday");
                 week.add("Tuesday");
                 week.add("Wednesday");
                 week.add("Thursday");
                 week.add("Friday");
                 week.add("Saturday");
                 week.add("Sunday");
-                weekDates(week);
+                dates = weekDates(week);
             }
             }
             return dates;
         }
 
-    private List<String> weekDates(List<String> checkThis){// For getting the Right date for data
+    private List<String> weekDates(List<String> checkThis){// For getting the Right date for day
     for(int i = 1; i < checkThis.size()+1; ++i){
         Date currentDate1 = new Date();
         LocalDateTime localDateTime1 = currentDate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
@@ -142,6 +142,13 @@ public class DateAndDayCheck {
 
     private String addDaysToDate(int days){ // If a plan is a head of the current date
         localDateTime = localDateTime.plusDays(days);
+        Date newDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        plannedDate = dateFormat.format(newDate);
+        return plannedDate;
+    }
+
+    public String removeDaysToDate(int day){
+        localDateTime = localDateTime.minusDays(day);
         Date newDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
         plannedDate = dateFormat.format(newDate);
         return plannedDate;
