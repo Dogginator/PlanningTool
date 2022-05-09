@@ -29,7 +29,7 @@ public class Event {
     @Column(length = 1, nullable = false, name ="end at:" )
     private int endAt;
 
-    private boolean thisWeek = false; // TODO hardcoded for now (create an option for user)
+    private boolean thisWeek; // TODO hardcoded for now (create an option for user)
 
 
     public Event(){
