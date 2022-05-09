@@ -24,8 +24,10 @@ public class Event {
     private String date;
     @Column(length = 25, nullable = false, name ="event" )
     private String event;
-    @Column(length = 1, nullable = false, name ="time" )
-    private int time;
+    @Column(length = 1, nullable = false, name ="start at:" )
+    private int startAt;
+    @Column(length = 1, nullable = false, name ="end at:" )
+    private int endAt;
 
     private boolean thisWeek = false; // TODO hardcoded for now (create an option for user)
 
@@ -38,7 +40,8 @@ public class Event {
     public Event(String day,
                  String date,
                  String event,
-                 int time,
+                 int startAt,
+                 int endAt,
                  boolean thisWeek
 
     ){
@@ -46,7 +49,8 @@ public class Event {
         this.day = day;
         this.date = date;
         this.event = event;
-        this.time = time;
+        this.startAt = startAt;
+        this.endAt = endAt;
         this.thisWeek = thisWeek;
     }
 }
