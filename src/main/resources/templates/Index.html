@@ -23,9 +23,9 @@
 </div>
 <body>
 <div id="home-header">
-    /log-in/Home
+    Welcome to PlanningTool v0.1
 </div>
-<div id="home-nav" th:replace="~{/fragments/app-fragments :: nav-login}">
+<div id="home-nav" th:replace="~{/fragments/app-fragments :: nav-Home}">
     Home Nav
 </div>
 
@@ -44,10 +44,10 @@
         <th:block th:each="event : ${listEvent}">
             <tr>
                 <td>[[${event.dayId}]]</td>
-                <td>[[${user.day}]]</td>
-                <td>[[${user.date}]]</td>
-                <td>[[${user.event}]]</td>
-                <td>[[${user.time}]]</td>
+                <td>[[${event.day}]]</td>
+                <td>[[${event.date}]]</td>
+                <td>[[${event.event}]]</td>
+                <td>[[${event.time}]]</td>
                 <td>
                     <a class="h4 mr-3" th:href="@{'/users/updateUser/' + ${user.id}}">Edit</a>
                     <a class="h4"th:href="@{'/users/delete/' + ${user.id}}">Delete</a>

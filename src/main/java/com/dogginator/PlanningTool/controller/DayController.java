@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class DayController {
-private Event day;
+private Event event;
 
     @Autowired
     EventService eventService;
@@ -25,80 +26,55 @@ private Event day;
     @RequestMapping(value = "/planningTool/dashboard", method = RequestMethod.GET)
     public String homePage(Model model){
         automaticRemoveOldDatesInDatabase();
-
-        return "DashBoard";
+        List<Event> weekList = getEventToday();
+        model.addAttribute("weekList", weekList);
+        return "Index";
     }
 
     @RequestMapping(value = "/planningTool/planning", method = RequestMethod.POST)
     public String postDay(Model model){
-        model.addAttribute("day", new Event());
-        return "createDay";// TODO SET UP createDay
+        model.addAttribute("event", new Event());
+        return "Planning";// TODO SET UP createDay
     }
-    @RequestMapping(value = "(/planningTool/dashboard", method = RequestMethod.POST)
+    @RequestMapping(value = "/planningTool/dashboard", method = RequestMethod.POST)
     public String saveDayToDB(Model model, Event day){
+
         model.addAttribute("day", day);
-        return "dashboard"; // TODO SET UP a dashboard
+        return "Index"; // TODO SET UP a dashboard
     }
 
-    @RequestMapping(value = "/planningTool/daily", method = RequestMethod.GET)
-    public String getCurrentDay(Model model){
-        String today = LocalDate.now().toString();
-            List<Event> listDay = eventService.findAllEventOnDay(today);
-            model.addAttribute("listDay", listDay);
-        return "daily";// TODO SET UP daily
-    }
-    @RequestMapping(value = "/planningTool/weekly", method = RequestMethod.GET) // TODO WIP set up a week
-    public String getCurrentWeek(Model model, Event day, DateService dateService){
-        day.setDay(LocalDate.now().getDayOfWeek().name());
-        List<String> week = dateService.correctWeek();
+    @RequestMapping(value = "/planningTool/weekly", method = RequestMethod.GET)
+    public String getCurrentWeek(Model model){
         List<Event> firstDay, secondDay, thirdDay, fourthDay, fifthDay, sixthDay, seventhDay;
-        for(int i = 0; i < week.size(); ++i){
-           switch (i){
-               case 0 -> {
-                    firstDay =  eventService.findAllEventOnDay(dateService.planningCheck(day.isThisWeek()));
-                    model.addAttribute("fistDay", firstDay);
-               }
-               case 1 -> {
-                   secondDay = eventService.findAllEventOnDay(dateService.planningCheck(day.isThisWeek()));
-                   model.addAttribute("secondDay", secondDay);
-               }
-               case 2-> {
-                   thirdDay = eventService.findAllEventOnDay(dateService.planningCheck(day.isThisWeek()));
-                   model.addAttribute("thirdDay", thirdDay);
-               }
-               case 3 -> {
-                   fourthDay = eventService.findAllEventOnDay(dateService.planningCheck(false));
-                   model.addAttribute("fourthDay", fourthDay);
-               }
-               case 4 -> {
-                   fifthDay = eventService.findAllEventOnDay(dateService.planningCheck(false));
-                   model.addAttribute("fifthDay", fifthDay);
-               }
-               case 5 -> {
-                   sixthDay = eventService.findAllEventOnDay(dateService.planningCheck(false));
-                   model.addAttribute("sixthDay", sixthDay);
-               }
-               case 6 -> {
-                   seventhDay = eventService.findAllEventOnDay(dateService.planningCheck(false));
-                   model.addAttribute("seventhDay", seventhDay);
-               }
-           }
-        }
-        return "weekly";// TODO set up weekly and look in to how to do more and less tables to display in frontend
+        List<Event> eventList = eventService.findAll();
+        String today = LocalDate.now().toString();
+        firstDay = eventList.stream().filter(event -> today.equals(event.getDate())).collect(Collectors.toList());
+        model.addAttribute("fistDay", firstDay);
+        secondDay = getNextDay(1);
+        model.addAttribute("secondDay", secondDay);
+        thirdDay = getNextDay(2);
+        model.addAttribute("thirdDay", thirdDay);
+        fourthDay = getNextDay(3);
+        model.addAttribute("fourthDay", fourthDay);
+        fifthDay = getNextDay(4);
+        model.addAttribute("fifthDay", fifthDay);
+        sixthDay = getNextDay(5);
+        model.addAttribute("sixthDay", sixthDay);
+        seventhDay = getNextDay(6);
+        model.addAttribute("seventhDay", seventhDay);
+        return "Weekly";// TODO set up weekly and look in to how to do more and less tables to display in frontend
     }
 
-    @RequestMapping(value = "/planningTool/week", method = RequestMethod.GET)
-    public void updateDay(Model model){
-        //List<Event> listWeek = eventService.findTotalWeek();// TODO how to set up a Week?
-    }
     @RequestMapping(value = "/planningTool/remove/plan/{id}", method = RequestMethod.DELETE)
     public String removeDay(@PathVariable("id")Integer id ){
         eventService.deleteDay(id);
-        return "dashboard"; // TODO set up an auto delete method here ones the day has passed
+        return "redirect:/planningTool/weekly";
     }
 
     private void automaticRemoveOldDatesInDatabase(){
-        List<Event> removalDays = eventService.findAllEventOnDay(dateService.removeDaysToDate(1));
+        List<Event> eventList = eventService.findAll();
+        List<Event> removalDays = eventList.stream()
+                .filter(event -> dateService.removeDaysToDate(1).equals(event.getDate())).collect(Collectors.toList());
         if(removalDays.size() != 0){
             for (Event event : removalDays){
                 int currentID = event.getDayId();
@@ -106,7 +82,15 @@ private Event day;
             }
         }
     }
-    private List<Event> automaticGetCurrentWeek(){
+    private List<Event> getEventToday(){
+        String today = LocalDate.now().toString();
+        List<Event> eventList = eventService.findAll();
+        return eventList.stream()
+                .filter(event -> today.equals(event.getDate())).collect(Collectors.toList());
+    }
 
+    private List<Event> getNextDay(int nextDay){
+        List<Event> eventList = eventService.findAll();
+        return eventList.stream().filter(event -> dateService.addDaysToDate(nextDay).equals(event.getDate())).collect(Collectors.toList());
     }
 }

@@ -113,8 +113,7 @@ public class DateService {
 
     private List<String> weekDates(List<String> checkThis){// For getting the Right date for day
     for(int i = 1; i < checkThis.size()+1; ++i){
-        Date currentDate1 = new Date();
-        LocalDateTime localDateTime1 = currentDate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime localDateTime1 = getToday();
         localDateTime1 = localDateTime1.plusDays(i);
         Date newDate1 = Date.from(localDateTime1.atZone(ZoneId.systemDefault()).toInstant());
         String plannedDate1 = dateFormat.format(newDate1);
@@ -140,7 +139,7 @@ public class DateService {
         return plannedDate;
     }
 
-    private String addDaysToDate(int days){ // If a plan is a head of the current date
+    public String addDaysToDate(int days){ // If a plan is a head of the current date
         localDateTime = localDateTime.plusDays(days);
         Date newDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
         plannedDate = dateFormat.format(newDate);
@@ -152,5 +151,20 @@ public class DateService {
         Date newDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
         plannedDate = dateFormat.format(newDate);
         return plannedDate;
+    }
+    public LocalDateTime getToday(){
+        Date currentDate = new Date();
+        return currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+    public List<String> getWeek(){
+        List<String> week = new ArrayList<>();
+        LocalDateTime localDateTime = getToday();
+        for(int i = 0; i < 7; i++){
+            localDateTime = localDateTime.plusDays(1);
+            Date oneDay = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            String aDay = dateFormat.format(oneDay);
+            week.add(aDay);
+        }
+        return week;
     }
 }

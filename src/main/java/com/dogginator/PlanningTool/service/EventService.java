@@ -5,7 +5,7 @@ import com.dogginator.PlanningTool.model.Event;
 import java.util.List;
 
 public interface EventService {
-    List<Event> findAllEventOnDay(String date);
-    List<Event> findTotalWeek(String id);
+    List<Event> findAll();
     void deleteDay(Integer id);
+    void saveEvent(Event event);
 }
