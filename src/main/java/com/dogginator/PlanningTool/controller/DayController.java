@@ -23,7 +23,7 @@ private Event event;
     EventService eventService;
     DateService dateService;
 
-    @RequestMapping(value = "/planningTool/dashboard", method = RequestMethod.GET)
+    @RequestMapping(value = "/planningTool", method = RequestMethod.GET)
     public String homePage(Model model){
         automaticRemoveOldDatesInDatabase();
         List<Event> weekList = getEventToday();
@@ -36,11 +36,27 @@ private Event event;
         model.addAttribute("event", new Event());
         return "Planning";// TODO SET UP createDay
     }
-    @RequestMapping(value = "/planningTool/dashboard", method = RequestMethod.POST)
-    public String saveDayToDB(Model model, Event day){
+    @RequestMapping(value = "/planningTool/save", method = RequestMethod.POST)
+    public String saveDayToDB(Model model, Event event){
 
-        model.addAttribute("day", day);
-        return "Index"; // TODO SET UP a dashboard
+        model.addAttribute("event", event);
+        String date = dateService.planningCheck(event.isThisWeek());
+        List<Event> eventList = eventService.findAll();
+        List<Event> filterList = eventList.stream().filter(e -> date.equals(e.getDate())).collect(Collectors.toList());
+
+        try {
+            for(Event event1 : filterList){
+                if(event1.getStartAt() != event.getStartAt() ){
+                    eventService.saveEvent(event);
+                }
+            }
+        }catch (Exception e){
+            System.out.println("Error: " + e + " the time is allrdy booked, for this day");
+            return "redirect:/planningTool/planning";
+        }
+
+
+        return "Index"; // TODO SET UP a dashboard = Index
     }
 
     @RequestMapping(value = "/planningTool/weekly", method = RequestMethod.GET)

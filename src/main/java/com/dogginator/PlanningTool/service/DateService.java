@@ -9,9 +9,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class DateService {
@@ -30,15 +28,13 @@ public class DateService {
     private LocalDateTime localDateTime = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     private String plannedDate;
     private final String currentDay = LocalDate.now().getDayOfWeek().name();
-    private final List<String> week = new ArrayList<String>();
-    private  List<String>  dates = new ArrayList<String>();
 
     public String planningCheck(Boolean checkWeek){ //Basic logic for Saving Events
         if(day.getDay().equalsIgnoreCase(currentDay)){
-            if(checkWeek.equals(true)){
-                plannedDate = addDaysToDate(7);
+            if(checkWeek.equals(true)){// if its next week on the same day or not
+                plannedDate = addDaysToDate(7);// next week
             }else {
-                plannedDate = addDaysToDate(0);
+                plannedDate = addDaysToDate(0);//current week
             }
             return plannedDate;
         }
@@ -54,72 +50,6 @@ public class DateService {
             }
         }
         return plannedDate;
-    }
-
-    public List<String> correctWeek(){ //Basic logic for Tables
-        switch (currentDay){
-            case mon -> {// current week
-                week.add("Tuesday");
-                week.add("Wednesday");
-                week.add("Thursday");
-                week.add("Friday");
-                week.add("Saturday");
-                week.add("Sunday");
-                dates = weekDates(week);
-            }
-            case tue -> {
-                week.add("Wednesday");
-                week.add("Thursday");
-                week.add("Friday");
-                week.add("Saturday");
-                week.add("Sunday");
-                dates = weekDates(week);
-            }
-            case wed -> {
-                week.add("Thursday");
-                week.add("Friday");
-                week.add("Saturday");
-                week.add("Sunday");
-                dates = weekDates(week);
-            }
-            case thu -> {
-                week.add("Friday");
-                week.add("Saturday");
-                week.add("Sunday");
-                dates = weekDates(week);
-            }
-            case fri -> {
-                week.add("Saturday");
-                week.add("Sunday");
-                dates = weekDates(week);
-            }
-            case sat -> {
-                week.add("Sunday");
-                dates = weekDates(week);
-            }
-            case sun -> { // next week
-                week.add("Monday");
-                week.add("Tuesday");
-                week.add("Wednesday");
-                week.add("Thursday");
-                week.add("Friday");
-                week.add("Saturday");
-                week.add("Sunday");
-                dates = weekDates(week);
-            }
-            }
-            return dates;
-        }
-
-    private List<String> weekDates(List<String> checkThis){// For getting the Right date for day
-    for(int i = 1; i < checkThis.size()+1; ++i){
-        LocalDateTime localDateTime1 = getToday();
-        localDateTime1 = localDateTime1.plusDays(i);
-        Date newDate1 = Date.from(localDateTime1.atZone(ZoneId.systemDefault()).toInstant());
-        String plannedDate1 = dateFormat.format(newDate1);
-        dates.add(plannedDate1);
-    }
-    return dates;
     }
 
     private  String caseCheck(String one, String two, String three, String four, String five, String six){ // add days to current date
@@ -155,16 +85,5 @@ public class DateService {
     public LocalDateTime getToday(){
         Date currentDate = new Date();
         return currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    }
-    public List<String> getWeek(){
-        List<String> week = new ArrayList<>();
-        LocalDateTime localDateTime = getToday();
-        for(int i = 0; i < 7; i++){
-            localDateTime = localDateTime.plusDays(1);
-            Date oneDay = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-            String aDay = dateFormat.format(oneDay);
-            week.add(aDay);
-        }
-        return week;
     }
 }
