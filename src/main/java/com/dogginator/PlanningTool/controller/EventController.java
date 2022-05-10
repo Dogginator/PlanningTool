@@ -61,10 +61,10 @@ private Event event;
                 if(event1.getStartAt() != event.getStartAt() ){
                     eventService.saveEvent(event);
                 }
-                redirectAttributes.addAttribute("message", "Event has been added");
+                redirectAttributes.addFlashAttribute("message", "Event has been added");
             }
         }catch (EventException e){
-            redirectAttributes.addAttribute("message", e.getMessage());
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/planningTool/planning";
         }
 
