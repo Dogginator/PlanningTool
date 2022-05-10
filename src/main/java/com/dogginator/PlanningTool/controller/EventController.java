@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class DayController {
+public class EventController {
 private Event event;
 
     @Autowired
@@ -24,20 +25,24 @@ private Event event;
     DateService dateService;
 
     @RequestMapping(value = "/planningTool", method = RequestMethod.GET)
-    public String homePage(Model model){
+    public String home(Model model){
         automaticRemoveOldDatesInDatabase();
-        List<Event> weekList = getEventToday();
-        model.addAttribute("weekList", weekList);
+        List<Event> eventToday = getEventToday();
+        model.addAttribute("eventToday", eventToday);
         return "Index";
     }
 
     @RequestMapping(value = "/planningTool/planning", method = RequestMethod.POST)
-    public String postDay(Model model){
+    public String planning(Model model){
+        List<Integer> startTimeList = getStartTimeList();
+        List<Integer> endTimeList = getEndTimeList();
         model.addAttribute("event", new Event());
-        return "Planning";// TODO SET UP createDay
+        model.addAttribute("startTimeList", startTimeList);
+        model.addAttribute("endTimeList", endTimeList);
+        return "Planning";// TODO SET UP planning.html
     }
     @RequestMapping(value = "/planningTool/save", method = RequestMethod.POST)
-    public String saveDayToDB(Model model, Event event){
+    public String save(Model model, Event event){
 
         model.addAttribute("event", event);
         String date = dateService.planningCheck(event.isThisWeek());
@@ -60,12 +65,12 @@ private Event event;
     }
 
     @RequestMapping(value = "/planningTool/weekly", method = RequestMethod.GET)
-    public String getCurrentWeek(Model model){
+    public String week(Model model){
         List<Event> firstDay, secondDay, thirdDay, fourthDay, fifthDay, sixthDay, seventhDay;
         List<Event> eventList = eventService.findAll();
         String today = LocalDate.now().toString();
         firstDay = eventList.stream().filter(event -> today.equals(event.getDate())).collect(Collectors.toList());
-        model.addAttribute("fistDay", firstDay);
+        model.addAttribute("firstDay", firstDay);
         secondDay = getNextDay(1);
         model.addAttribute("secondDay", secondDay);
         thirdDay = getNextDay(2);
@@ -108,5 +113,20 @@ private Event event;
     private List<Event> getNextDay(int nextDay){
         List<Event> eventList = eventService.findAll();
         return eventList.stream().filter(event -> dateService.addDaysToDate(nextDay).equals(event.getDate())).collect(Collectors.toList());
+    }
+
+    private List<Integer> getStartTimeList(){
+        List<Integer> timeList = new ArrayList<>();
+        for(int i = 5; i <= 18; i++ ){
+            timeList.add(i);
+        }
+        return timeList;
+    }
+    private List<Integer> getEndTimeList(){
+        List<Integer> timeList = new ArrayList<>();
+        for(int i = 6; i <= 18; i++ ){
+            timeList.add(i);
+        }
+        return timeList;
     }
 }

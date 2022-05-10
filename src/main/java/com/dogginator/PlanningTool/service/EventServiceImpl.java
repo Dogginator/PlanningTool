@@ -1,17 +1,16 @@
 package com.dogginator.PlanningTool.service;
 
-import com.dogginator.PlanningTool.controller.DayRepository;
+import com.dogginator.PlanningTool.controller.EventRepository;
 import com.dogginator.PlanningTool.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EventServiceImpl implements EventService {
 
     @Autowired
-    DayRepository dayRepo;
+    EventRepository dayRepo;
 
 
     @Override
