@@ -7,9 +7,11 @@ import com.dogginator.PlanningTool.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,6 +33,11 @@ private Event event;
         model.addAttribute("eventToday", eventToday);
         return "Index";
     }
+    @RequestMapping(value = "/planningTool/index/delete/{id}", method = RequestMethod.DELETE)
+    public String removeDayInIndex(@PathVariable("id")Integer id ){
+        eventService.deleteDay(id);
+        return "redirect:/planningTool";
+    }
 
     @RequestMapping(value = "/planningTool/planning", method = RequestMethod.POST)
     public String planning(Model model){
@@ -42,7 +49,7 @@ private Event event;
         return "Planning";// TODO SET UP planning.html
     }
     @RequestMapping(value = "/planningTool/save", method = RequestMethod.POST)
-    public String save(Model model, Event event){
+    public String save(@ModelAttribute("event") Model model, Event event, RedirectAttributes redirectAttributes) {
 
         model.addAttribute("event", event);
         String date = dateService.planningCheck(event.isThisWeek());
@@ -54,9 +61,10 @@ private Event event;
                 if(event1.getStartAt() != event.getStartAt() ){
                     eventService.saveEvent(event);
                 }
+                redirectAttributes.addAttribute("message", "Event has been added");
             }
-        }catch (Exception e){
-            System.out.println("Error: " + e + " the time is allrdy booked, for this day");
+        }catch (EventException e){
+            redirectAttributes.addAttribute("message", e.getMessage());
             return "redirect:/planningTool/planning";
         }
 
