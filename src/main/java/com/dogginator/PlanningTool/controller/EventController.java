@@ -1,15 +1,18 @@
 package com.dogginator.PlanningTool.controller;
 
 
+import com.dogginator.PlanningTool.Constants;
 import com.dogginator.PlanningTool.service.DateService;
 import com.dogginator.PlanningTool.model.Event;
 import com.dogginator.PlanningTool.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 @Controller
 public class EventController {
 private Event event;
+private Constants constants;
 
     @Autowired
     EventService eventService;
@@ -32,6 +36,12 @@ private Event event;
         return "Index";
     }
 
+    @RequestMapping(value = "/planningTool/index/delete/{id}", method = RequestMethod.DELETE)
+    public String removeDayInIndex(@PathVariable("id")Integer id ){
+        eventService.deleteDay(id);
+        return "redirect:/planningTool";
+    }
+
     @RequestMapping(value = "/planningTool/planning", method = RequestMethod.POST)
     public String planning(Model model){
         List<Integer> startTimeList = getStartTimeList();
@@ -42,7 +52,7 @@ private Event event;
         return "Planning";// TODO SET UP planning.html
     }
     @RequestMapping(value = "/planningTool/save", method = RequestMethod.POST)
-    public String save(Model model, Event event){
+    public String save(@ModelAttribute("event") Model model, Event event, RedirectAttributes redirectAttributes) {
 
         model.addAttribute("event", event);
         String date = dateService.planningCheck(event.isThisWeek());
@@ -52,16 +62,16 @@ private Event event;
         try {
             for(Event event1 : filterList){
                 if(event1.getStartAt() != event.getStartAt() ){
-                    eventService.saveEvent(event);
+                    eventService.createEvent(event);
                 }
+                redirectAttributes.addFlashAttribute("message", "Event has been added");
             }
-        }catch (Exception e){
-            System.out.println("Error: " + e + " the time is allrdy booked, for this day");
-            return "redirect:/planningTool/planning";
+        }catch (EventException e){
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "Index";
         }
 
-
-        return "Index"; // TODO SET UP a dashboard = Index
+        return "redirect:/planningTool"; // TODO SET UP a dashboard = Index
     }
 
     @RequestMapping(value = "/planningTool/weekly", method = RequestMethod.GET)
@@ -85,6 +95,40 @@ private Event event;
         model.addAttribute("seventhDay", seventhDay);
         return "Weekly";// TODO set up weekly and look in to how to do more and less tables to display in frontend
     }
+    @RequestMapping(value = "/planningTool/Weekly/Update/{id}", method = RequestMethod.GET)
+    public String updateWeek(@PathVariable("id")Integer id, Model model){
+        List<Integer> startTimeList = getStartTimeList();
+        List<Integer> endTimeList = getEndTimeList();
+        List<String> dayNameList = getSevenDays();
+        Event event = eventService.getEventById(id);
+        model.addAttribute("event", event);
+        model.addAttribute("dayNameList", dayNameList);
+        model.addAttribute("startTimeList", startTimeList);
+        model.addAttribute("endTimeList", endTimeList);
+    return "Update";
+    }
+
+    @RequestMapping(value = "/planningTool/Weekly/Update/Save", method = RequestMethod.POST)
+    public String saveUpdateWeek(@ModelAttribute("event") Event event, RedirectAttributes redirectAttributes) {
+        String date = event.getDate();
+        List<Event> eventList = eventService.findAll();
+        List<Event> filterList = eventList.stream().filter(e -> date.equals(e.getDate())).collect(Collectors.toList());
+
+        try {
+            for(Event event1 : filterList){
+                if(event1.getStartAt() != event.getStartAt() ){
+                    eventService.saveEvent(event);
+                }
+                redirectAttributes.addFlashAttribute("message", "Event has been added");
+            }
+        }catch (EventException e){
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "Update";
+        }
+
+        return "redirect:/planningTool/weekly"; // TODO SET UP a dashboard = Index
+    }
+
 
     @RequestMapping(value = "/planningTool/remove/plan/{id}", method = RequestMethod.DELETE)
     public String removeDay(@PathVariable("id")Integer id ){
@@ -117,16 +161,27 @@ private Event event;
 
     private List<Integer> getStartTimeList(){
         List<Integer> timeList = new ArrayList<>();
-        for(int i = 5; i <= 18; i++ ){
+        for(int i = 7; i <= 18; i++ ){
             timeList.add(i);
         }
         return timeList;
     }
     private List<Integer> getEndTimeList(){
         List<Integer> timeList = new ArrayList<>();
-        for(int i = 6; i <= 18; i++ ){
+        for(int i = 8; i <= 18; i++ ){
             timeList.add(i);
         }
         return timeList;
+    }
+    private List<String> getSevenDays(){
+        List<String> week = new ArrayList<>();
+        week.add(constants.mon);
+        week.add(constants.tue);
+        week.add(constants.wed);
+        week.add(constants.thu);
+        week.add(constants.fri);
+        week.add(constants.sat);
+        week.add(constants.sun);
+        return week;
     }
 }

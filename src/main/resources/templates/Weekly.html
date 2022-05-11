@@ -18,15 +18,12 @@
         <link rel="stylesheet" type="text/css" href="../static/home.css" th:href="@{/home.css}"/>
     </th:block>
 </head>
-<div th:if="${message}" class="alert alert-success text-center">
-    [[${message}]]
-</div>
 <body>
 <div id="home-header">
     Welcome to PlanningTool v0.1
 </div>
 <div id="home-nav" th:replace="~{/fragments/app-fragments :: nav-Home}">
-    Home Nav
+    Menu - Week
 </div>
 
 <div>
@@ -49,8 +46,8 @@
                 <td>[[${event.event}]]</td>
                 <td>[[${event.time}]]</td>
                 <td>
-                    <a class="h4 mr-3" th:href="@{'/users/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/users/delete/' + ${event.dayId}}">Delete</a>
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -76,8 +73,8 @@
                 <td>[[${event.event}]]</td>
                 <td>[[${event.time}]]</td>
                 <td>
-                    <a class="h4 mr-3" th:href="@{'/users/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/users/delete/' + ${event.dayId}}">Delete</a>
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -103,8 +100,8 @@
                 <td>[[${event.event}]]</td>
                 <td>[[${event.time}]]</td>
                 <td>
-                    <a class="h4 mr-3" th:href="@{'/users/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/users/delete/' + ${event.dayId}}">Delete</a>
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -130,8 +127,8 @@
                 <td>[[${event.event}]]</td>
                 <td>[[${event.time}]]</td>
                 <td>
-                    <a class="h4 mr-3" th:href="@{'/users/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/users/delete/' + ${event.dayId}}">Delete</a>
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -157,8 +154,8 @@
                 <td>[[${event.event}]]</td>
                 <td>[[${event.time}]]</td>
                 <td>
-                    <a class="h4 mr-3" th:href="@{'/users/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/users/delete/' + ${event.dayId}}">Delete</a>
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -184,8 +181,8 @@
                 <td>[[${event.event}]]</td>
                 <td>[[${event.time}]]</td>
                 <td>
-                    <a class="h4 mr-3" th:href="@{'/users/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/users/delete/' + ${event.dayId}}">Delete</a>
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -211,8 +208,8 @@
                 <td>[[${event.event}]]</td>
                 <td>[[${event.time}]]</td>
                 <td>
-                    <a class="h4 mr-3" th:href="@{'/users/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/users/delete/' + ${event.dayId}}">Delete</a>
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
