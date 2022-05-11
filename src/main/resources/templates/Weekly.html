@@ -18,15 +18,12 @@
         <link rel="stylesheet" type="text/css" href="../static/home.css" th:href="@{/home.css}"/>
     </th:block>
 </head>
-<div  th:if="${message}" class="alert alert-success text-center">
-    [[${message}]]
-</div>
 <body>
 <div id="home-header">
     Welcome to PlanningTool v0.1
 </div>
 <div id="home-nav" th:replace="~{/fragments/app-fragments :: nav-Home}">
-    Home Nav
+    Menu - Week
 </div>
 
 <div>

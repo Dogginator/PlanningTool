@@ -14,13 +14,21 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
-    public void saveEvent(Event event) {
+    public void createEvent(Event event) {
         dayRepo.save(event);
     }
 
     @Override
+    public Event getEventById(Integer id){return dayRepo.getById(id);}
+
+    @Override
     public List<Event> findAll(){return dayRepo.findAll();}
+
     @Override
     public void deleteDay(Integer id){dayRepo.deleteById(id);}
+
+    @Override
+    public void saveEvent(Event event){dayRepo.save(event);}
+
 
 }
