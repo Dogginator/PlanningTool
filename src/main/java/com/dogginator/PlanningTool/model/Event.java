@@ -15,21 +15,21 @@ import javax.persistence.*;
 public class Event {
 
     @Id
-    @GeneratedValue
-    private int dayId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer dayId;
 
     @Column(length = 15, nullable = false, name ="day" )
     private String day;
     @Column(length = 15, nullable = false, name ="date" )
     private String date;
-    @Column(length = 25, nullable = false, name ="event" )
-    private String event;
-    @Column(length = 1, nullable = false, name ="start at:" )
-    private int startAt;
-    @Column(length = 1, nullable = false, name ="end at:" )
-    private int endAt;
+    @Column(length = 25, nullable = false, name ="eventPlan")
+    private String eventPlan;
+    @Column(length = 1, nullable = false, name ="start_at")
+    private Integer startAt;
+    @Column(length = 1, nullable = false, name ="end_at" )
+    private Integer endAt;
 
-    private boolean thisWeek; // TODO hardcoded for now (create an option for user)
+    private boolean thisWeek;
 
 
     public Event(){
@@ -39,7 +39,7 @@ public class Event {
 
     public Event(String day,
                  String date,
-                 String event,
+                 String eventPlan,
                  int startAt,
                  int endAt,
                  boolean thisWeek
@@ -48,7 +48,7 @@ public class Event {
         super();
         this.day = day;
         this.date = date;
-        this.event = event;
+        this.eventPlan = eventPlan;
         this.startAt = startAt;
         this.endAt = endAt;
         this.thisWeek = thisWeek;
