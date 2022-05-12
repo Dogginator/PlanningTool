@@ -33,6 +33,38 @@ private Event event;
         model.addAttribute("eventToday", eventToday);
         return "Index";
     }
+    @RequestMapping(value = "/planningTool/updating/{id}", method = RequestMethod.GET)
+    public String update(@PathVariable("id")Integer id, Model model){
+        List<Integer> startTimeList = getStartTimeList();
+        List<Integer> endTimeList = getEndTimeList();
+        List<String> dayNameList = getSevenDays();
+        Event event = eventService.getEventById(id);
+        model.addAttribute("event", event);
+        model.addAttribute("dayNameList", dayNameList);
+        model.addAttribute("startTimeList", startTimeList);
+        model.addAttribute("endTimeList", endTimeList);
+        return "Updating";
+    }
+    @RequestMapping(value = "/planningTool/updating/save", method = RequestMethod.POST)
+    public String saveUpdating(@ModelAttribute("event") Event event, RedirectAttributes redirectAttributes){
+        String date = event.getDate();
+        List<Event> eventList = eventService.findAll();
+        List<Event> filterList = eventList.stream().filter(e -> date.equals(e.getDate())).collect(Collectors.toList());
+
+        try {
+            for(Event event1 : filterList){
+                if(event1.getStartAt() != event.getStartAt() ){
+                    eventService.saveEvent(event);
+                }
+                redirectAttributes.addFlashAttribute("message", "Event has been added");
+            }
+        }catch (EventException e){
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "Updating";// TODO Fix Updating.html
+        }
+
+        return "redirect:/planningTool";
+    }
 
     @RequestMapping(value = "/planningTool/index/delete/{id}", method = RequestMethod.DELETE)
     public String removeDayInIndex(@PathVariable("id")Integer id ){
@@ -49,7 +81,7 @@ private Event event;
         model.addAttribute("dayNameList", dayNameList);
         model.addAttribute("startTimeList", startTimeList);
         model.addAttribute("endTimeList", endTimeList);
-        return "Planning";// TODO fix planning.html
+        return "Planning";// TODO make it nicer planning.html
     }
     @RequestMapping(value = "/planningTool/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("event") Model model, Event event, RedirectAttributes redirectAttributes) {
@@ -71,7 +103,7 @@ private Event event;
             return "Index";
         }
 
-        return "redirect:/planningTool"; // TODO fix Index
+        return "redirect:/planningTool";
     }
 
     @RequestMapping(value = "/planningTool/weekly", method = RequestMethod.GET)
@@ -93,7 +125,7 @@ private Event event;
         model.addAttribute("sixthDay", sixthDay);
         seventhDay = getNextDay(6);
         model.addAttribute("seventhDay", seventhDay);
-        return "Weekly";// TODO fix weekly
+        return "Weekly";// TODO make it nicer weekly.html
     }
     @RequestMapping(value = "/planningTool/weekly/update/{id}", method = RequestMethod.GET)
     public String updateWeek(@PathVariable("id")Integer id, Model model){
