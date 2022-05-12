@@ -7,21 +7,11 @@
 <body>
 <!-- planning Navigator -->
 <ul th:fragment = "nav-Home">
-    <li><a th:href="@{/Index}">Home</a></li>
-    <li><a th:href="@{/Planning}"></a>Planning</li>
-    <li><a th:href="@{/Weekly}"></a></li>
+    <li><a th:href="@{/planningTool}">Home</a></li>
+    <li><a th:href="@{/planningTool/planning}">Planning</a></li>
+    <li><a th:href="@{/planningTool/weekly}">Weekly</a></li>
 </ul>
 <!-- Default Navigator -->
-<ul th:fragment = "nav-Planning">
-    <li><a th:href="@{/Monday}">MONDAY</a></li>
-    <li><a th:href="@{/Tuesday}">TUESDAY</a></li>
-    <li><a th:href="@{/Wednesday}">WEDNESDAY</a></li>
-    <li><a th:href="@{/Thursday}">THURSDAY</a></li>
-    <li><a th:href="@{/Friday}">FRIDAY</a></li>
-    <li><a th:href="@{/Saturday}">SATURDAY</a></li>
-    <li><a th:href="@{/Sunday}">SUNDAY</a></li>
-    <li><a th:href="@{/Index}">RETURN</a></li>
-</ul>
 
 <div th:fragment="copyright">
     &copy; PlanningTool

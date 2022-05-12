@@ -1,7 +1,6 @@
 package com.dogginator.PlanningTool.controller;
 
 
-import com.dogginator.PlanningTool.Constants;
 import com.dogginator.PlanningTool.service.DateService;
 import com.dogginator.PlanningTool.model.Event;
 import com.dogginator.PlanningTool.service.EventService;
@@ -22,7 +21,6 @@ import java.util.stream.Collectors;
 @Controller
 public class EventController {
 private Event event;
-private Constants constants;
 
     @Autowired
     EventService eventService;
@@ -42,14 +40,16 @@ private Constants constants;
         return "redirect:/planningTool";
     }
 
-    @RequestMapping(value = "/planningTool/planning", method = RequestMethod.POST)
+    @RequestMapping(value = "/planningTool/planning", method = RequestMethod.GET)
     public String planning(Model model){
         List<Integer> startTimeList = getStartTimeList();
         List<Integer> endTimeList = getEndTimeList();
+        List<String> dayNameList = getSevenDays();
         model.addAttribute("event", new Event());
+        model.addAttribute("dayNameList", dayNameList);
         model.addAttribute("startTimeList", startTimeList);
         model.addAttribute("endTimeList", endTimeList);
-        return "Planning";// TODO SET UP planning.html
+        return "Planning";// TODO fix planning.html
     }
     @RequestMapping(value = "/planningTool/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("event") Model model, Event event, RedirectAttributes redirectAttributes) {
@@ -71,7 +71,7 @@ private Constants constants;
             return "Index";
         }
 
-        return "redirect:/planningTool"; // TODO SET UP a dashboard = Index
+        return "redirect:/planningTool"; // TODO fix Index
     }
 
     @RequestMapping(value = "/planningTool/weekly", method = RequestMethod.GET)
@@ -93,9 +93,9 @@ private Constants constants;
         model.addAttribute("sixthDay", sixthDay);
         seventhDay = getNextDay(6);
         model.addAttribute("seventhDay", seventhDay);
-        return "Weekly";// TODO set up weekly and look in to how to do more and less tables to display in frontend
+        return "Weekly";// TODO fix weekly
     }
-    @RequestMapping(value = "/planningTool/Weekly/Update/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/planningTool/weekly/update/{id}", method = RequestMethod.GET)
     public String updateWeek(@PathVariable("id")Integer id, Model model){
         List<Integer> startTimeList = getStartTimeList();
         List<Integer> endTimeList = getEndTimeList();
@@ -108,7 +108,7 @@ private Constants constants;
     return "Update";
     }
 
-    @RequestMapping(value = "/planningTool/Weekly/Update/Save", method = RequestMethod.POST)
+    @RequestMapping(value = "/planningTool/weekly/update/save", method = RequestMethod.POST)
     public String saveUpdateWeek(@ModelAttribute("event") Event event, RedirectAttributes redirectAttributes) {
         String date = event.getDate();
         List<Event> eventList = eventService.findAll();
@@ -123,10 +123,10 @@ private Constants constants;
             }
         }catch (EventException e){
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "Update";
+            return "Update";// TODO fix Update.html
         }
 
-        return "redirect:/planningTool/weekly"; // TODO SET UP a dashboard = Index
+        return "redirect:/planningTool/weekly";
     }
 
 
@@ -175,13 +175,21 @@ private Constants constants;
     }
     private List<String> getSevenDays(){
         List<String> week = new ArrayList<>();
-        week.add(constants.mon);
-        week.add(constants.tue);
-        week.add(constants.wed);
-        week.add(constants.thu);
-        week.add(constants.fri);
-        week.add(constants.sat);
-        week.add(constants.sun);
+        String
+                mon = "MONDAY",
+                tue = "TUESDAY",
+                wed = "WEDNESDAY",
+                thu =  "THURSDAY",
+                fri =  "FRIDAY",
+                sat = "SATURDAY",
+                sun = "SUNDAY";
+        week.add(mon);
+        week.add(tue);
+        week.add(wed);
+        week.add(thu);
+        week.add(fri);
+        week.add(sat);
+        week.add(sun);
         return week;
     }
 }
