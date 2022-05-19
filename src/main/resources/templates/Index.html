@@ -29,35 +29,41 @@
     Menu - Index
 </div>
 
-<div id="home-main-content">
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th>DayId</th>
-            <th>Day</th>
-            <th>Date</th>
-            <th>Event</th>
-            <th>time</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="event : ${eventToday}">
-            <tr>
-                <td>[[${event.dayId}]]</td>
-                <td>[[${event.day}]]</td>
-                <td>[[${event.date}]]</td>
-                <td>[[${event.event}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>
-                    <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/index/delete/' + ${event.dayId}}">Delete</a>
-                </td>
-            </tr>
-        </th:block>
-        </tbody>
+<div id="home-main-content" class="container" >
+    <div class="row"  >
+        <div class="col-lg-10 mt-5 mb-5" >
+            <table class="table table-bordered"  >
+                <thead class="table-dark">
+                <tr>
+                    <th></th>
+                    <th>Day</th>
+                    <th>Date</th>
+                    <th>Event</th>
+                    <th>Start At</th>
+                    <th>End At</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block  th:each="event : ${eventToday}">
+                    <tr>
+                        <td th:type="hidden">[[${event.dayId}]]</td>
+                        <td>[[${event.day}]]</td>
+                        <td>[[${event.date}]]</td>
+                        <td>[[${event.eventPlan}]]</td>
+                        <td>[[${event.startAt}]]</td>
+                        <td>[[${event.endAt}]]</td>
+                        <td >
+                            <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
+                            <a class="h4"th:href="@{'/delete/' + ${event.dayId}}">Delete</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
 
-    </table>
+            </table>
+        </div>
+    </div>
+
 </div>
 <div id="home-footer" th:replace="~{/fragments/app-fragments :: copyright}">
     Footer

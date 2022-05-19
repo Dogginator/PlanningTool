@@ -1,6 +1,7 @@
 package com.dogginator.PlanningTool.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,14 +10,32 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString
-@Table(catalog = "Event")
-@Entity
+@Entity(name = "Event")
 public class Event {
+
+    public Event(String day,
+                 String date,
+                 String eventPlan,
+                 int startAt,
+                 int endAt,
+                 boolean thisWeek
+
+    ){
+        this.day = day;
+        this.date = date;
+        this.eventPlan = eventPlan;
+        this.startAt = startAt;
+        this.endAt = endAt;
+        this.thisWeek = thisWeek;
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer dayId;
+
 
     @Column(length = 15, nullable = false, name ="day" )
     private String day;
@@ -31,26 +50,11 @@ public class Event {
 
     private boolean thisWeek;
 
-
-    public Event(){
-        super();
+    public Integer getDayId() {
+        return dayId;
     }
 
 
-    public Event(String day,
-                 String date,
-                 String eventPlan,
-                 int startAt,
-                 int endAt,
-                 boolean thisWeek
 
-    ){
-        super();
-        this.day = day;
-        this.date = date;
-        this.eventPlan = eventPlan;
-        this.startAt = startAt;
-        this.endAt = endAt;
-        this.thisWeek = thisWeek;
-    }
+
 }

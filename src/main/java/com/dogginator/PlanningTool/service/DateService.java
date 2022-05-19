@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-@Service
+
 public class DateService {
-    private Event day;
     private final String
             mon = "MONDAY",
             tue = "TUESDAY",
@@ -29,9 +28,10 @@ public class DateService {
     private String plannedDate;
     private final String currentDay = LocalDate.now().getDayOfWeek().name();
 
-    public String planningCheck(Boolean checkWeek){ //Basic logic for Saving Events
-        if(day.getDay().equalsIgnoreCase(currentDay)){
-            if(checkWeek.equals(true)){// if its next week on the same day or not
+    public String planningCheck(Event event){ //Basic logic for Saving Events
+        if(event.getDay().equalsIgnoreCase(currentDay)){
+            boolean checkWeek = event.isThisWeek();
+            if(checkWeek){// if its next week on the same day or not
                 plannedDate = addDaysToDate(7);// next week
             }else {
                 plannedDate = addDaysToDate(0);//current week
@@ -40,30 +40,30 @@ public class DateService {
         }
         else{
             switch (currentDay){
-                case mon -> plannedDate = caseCheck(tue, wed, thu, fri, sat, sun);
-                case tue -> plannedDate = caseCheck(wed, thu, fri, sat, sun, mon);
-                case wed -> plannedDate = caseCheck(thu, fri, sat, sun, mon, tue);
-                case thu -> plannedDate = caseCheck(fri, sat, sun, mon, tue, wed);
-                case fri -> plannedDate = caseCheck(sat, sun, mon, tue, wed, thu);
-                case sat -> plannedDate = caseCheck(sun, mon, tue, wed, thu, fri);
-                case sun -> plannedDate = caseCheck(mon, tue, wed, thu, fri, sat);
+                case mon -> plannedDate = caseCheck( event, tue, wed, thu, fri, sat, sun);
+                case tue -> plannedDate = caseCheck( event, wed, thu, fri, sat, sun, mon);
+                case wed -> plannedDate = caseCheck( event, thu, fri, sat, sun, mon, tue);
+                case thu -> plannedDate = caseCheck( event, fri, sat, sun, mon, tue, wed);
+                case fri -> plannedDate = caseCheck( event, sat, sun, mon, tue, wed, thu);
+                case sat -> plannedDate = caseCheck( event, sun, mon, tue, wed, thu, fri);
+                case sun -> plannedDate = caseCheck( event, mon, tue, wed, thu, fri, sat);
             }
         }
         return plannedDate;
     }
 
-    private  String caseCheck(String one, String two, String three, String four, String five, String six){ // add days to current date
-        if(day.getDay().equalsIgnoreCase(one)) {
+    private  String caseCheck( Event event, String one, String two, String three, String four, String five, String six){ // add days to current date
+        if(event.getDay().equalsIgnoreCase(one)) {
             plannedDate = addDaysToDate(1);
-        }else if(day.getDay().equalsIgnoreCase(two)){
+        }else if(event.getDay().equalsIgnoreCase(two)){
             plannedDate = addDaysToDate(2);
-        }else if(day.getDay().equalsIgnoreCase(three)){
+        }else if(event.getDay().equalsIgnoreCase(three)){
             plannedDate = addDaysToDate(3);
-        }else if(day.getDay().equalsIgnoreCase(four)){
+        }else if(event.getDay().equalsIgnoreCase(four)){
             plannedDate = addDaysToDate(4);
-        }else if(day.getDay().equalsIgnoreCase(five)){
+        }else if(event.getDay().equalsIgnoreCase(five)){
             plannedDate = addDaysToDate(5);
-        }else if(day.getDay().equalsIgnoreCase(six)){
+        }else if(event.getDay().equalsIgnoreCase(six)){
             plannedDate = addDaysToDate(6);
         }
         return plannedDate;
