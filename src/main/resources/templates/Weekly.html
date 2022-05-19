@@ -27,28 +27,34 @@
 </div>
 
 <div id="home-main-content">
+    <div>
+        <div>
+
+        </div>
+    </div>
     <table class="table table-bordered">
         <thead class="table-dark">
         <tr>
-            <th>DayId</th>
+            <th></th>
             <th>Day</th>
             <th>Date</th>
             <th>Event</th>
-            <th>time</th>
+            <th>Start At</th>
+            <th>End At</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:each="event : ${firstDay}">
             <tr>
-                <td>[[${event.dayId}]]</td>
+                <td th:type="hidden">[[${event.dayId}]]</td>
                 <td>[[${event.day}]]</td>
                 <td>[[${event.date}]]</td>
                 <td>[[${event.event}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>
-                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                <td>[[${event.startAt}]]</td>
+                <td>[[${event.endAt}]]</td>
+                <td >
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/index/delete/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -58,25 +64,26 @@
     <table class="table table-bordered">
         <thead class="table-dark">
         <tr>
-            <th>DayId</th>
+            <th></th>
             <th>Day</th>
             <th>Date</th>
             <th>Event</th>
-            <th>time</th>
+            <th>Start At</th>
+            <th>End At</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:each="event : ${secondDay}">
             <tr>
-                <td>[[${event.dayId}]]</td>
+                <td th:type="hidden">[[${event.dayId}]]</td>
                 <td>[[${event.day}]]</td>
                 <td>[[${event.date}]]</td>
                 <td>[[${event.event}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>
-                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                <td>[[${event.startAt}]]</td>
+                <td>[[${event.endAt}]]</td>
+                <td >
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/index/delete/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -86,25 +93,26 @@
     <table class="table table-bordered">
         <thead class="table-dark">
         <tr>
-            <th>DayId</th>
+            <th></th>
             <th>Day</th>
             <th>Date</th>
             <th>Event</th>
-            <th>time</th>
+            <th>Start At</th>
+            <th>End At</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:each="event : ${thirdDay}">
             <tr>
-                <td>[[${event.dayId}]]</td>
+                <td th:type="hidden">[[${event.dayId}]]</td>
                 <td>[[${event.day}]]</td>
                 <td>[[${event.date}]]</td>
                 <td>[[${event.event}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>
-                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                <td>[[${event.startAt}]]</td>
+                <td>[[${event.endAt}]]</td>
+                <td >
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/index/delete/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -114,25 +122,26 @@
     <table class="table table-bordered">
         <thead class="table-dark">
         <tr>
-            <th>DayId</th>
+            <th></th>
             <th>Day</th>
             <th>Date</th>
             <th>Event</th>
-            <th>time</th>
+            <th>Start At</th>
+            <th>End At</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:each="event : ${fourthDay}">
             <tr>
-                <td>[[${event.dayId}]]</td>
+                <td th:type="hidden">[[${event.dayId}]]</td>
                 <td>[[${event.day}]]</td>
                 <td>[[${event.date}]]</td>
                 <td>[[${event.event}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>
-                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                <td>[[${event.startAt}]]</td>
+                <td>[[${event.endAt}]]</td>
+                <td >
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/index/delete/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -142,25 +151,26 @@
     <table class="table table-bordered">
         <thead class="table-dark">
         <tr>
-            <th>DayId</th>
+            <th></th>
             <th>Day</th>
             <th>Date</th>
             <th>Event</th>
-            <th>time</th>
+            <th>Start At</th>
+            <th>End At</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:each="event : ${fifthDay}">
             <tr>
-                <td>[[${event.dayId}]]</td>
+                <td th:type="hidden">[[${event.dayId}]]</td>
                 <td>[[${event.day}]]</td>
                 <td>[[${event.date}]]</td>
                 <td>[[${event.event}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>
-                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                <td>[[${event.startAt}]]</td>
+                <td>[[${event.endAt}]]</td>
+                <td >
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/index/delete/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -170,25 +180,26 @@
     <table class="table table-bordered">
         <thead class="table-dark">
         <tr>
-            <th>DayId</th>
+            <th></th>
             <th>Day</th>
             <th>Date</th>
             <th>Event</th>
-            <th>time</th>
+            <th>Start At</th>
+            <th>End At</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:each="event : ${sixthDay}">
             <tr>
-                <td>[[${event.dayId}]]</td>
+                <td th:type="hidden">[[${event.dayId}]]</td>
                 <td>[[${event.day}]]</td>
                 <td>[[${event.date}]]</td>
                 <td>[[${event.event}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>
-                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                <td>[[${event.startAt}]]</td>
+                <td>[[${event.endAt}]]</td>
+                <td >
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/index/delete/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
@@ -198,25 +209,26 @@
     <table class="table table-bordered">
         <thead class="table-dark">
         <tr>
-            <th>DayId</th>
+            <th></th>
             <th>Day</th>
             <th>Date</th>
             <th>Event</th>
-            <th>time</th>
+            <th>Start At</th>
+            <th>End At</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:each="event : ${seventhDay}">
             <tr>
-                <td>[[${event.dayId}]]</td>
+                <td th:type="hidden">[[${event.dayId}]]</td>
                 <td>[[${event.day}]]</td>
                 <td>[[${event.date}]]</td>
                 <td>[[${event.event}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>[[${event.time}]]</td>
-                <td>
-                    <a class="h4 mr-3" th:href="@{'/planningTool/updateUser/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                <td>[[${event.startAt}]]</td>
+                <td>[[${event.endAt}]]</td>
+                <td >
+                    <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/index/delete/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>
