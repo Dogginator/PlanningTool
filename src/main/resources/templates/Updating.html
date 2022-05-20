@@ -13,6 +13,7 @@
     <div class="text-center"><h2>Update</h2></div>
     <form th:action="@{/updating/save}" method="post" th:object="${event}"
           style="max-width: 500px; margin: 0 auto;">
+        <input type="hidden" th:field="*{dayId}">
         <div class="border border-secondary rounded p-3">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Select Day</label>
