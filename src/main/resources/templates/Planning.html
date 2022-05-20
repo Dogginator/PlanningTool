@@ -32,7 +32,7 @@
                 <div class="col-sm-8">
                     <label class="col-sm-4 col-form-label">Select what day this week</label>
                     <select id="day" name="day" class="form-control">
-                        <option  th:each="day : ${dayNameList}"th:value="${day}" th:text="${day}"></option>
+                        <option  th:each=" day : ${dayNameList}"th:value="${day}" th:text="${day}"></option>
                     </select>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 <label class="col-sm-4 col-form-label">Start at:</label>
                 <div class="col-sm-8">
                     <select th:field="*{startAt}" class="form-control">
-                        <option  th:each="option : ${startTimeList}"th:value="${{option}}" th:text="${option}"></option>
+                        <option  th:each=" option : ${startTimeList}"th:value="${{option}}" th:text="${option}"></option>
                     </select>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                 <label class="col-sm-4 col-form-label">Ends at:</label>
                 <div class="col-sm-8">
                     <select th:field="*{endAt}" class="form-control">
-                        <option th:each="option : ${endTimeList}" th:value="${{option}}" th:text="${option}"></option>
+                        <option th:each=" option : ${endTimeList}" th:value="${{option}}" th:text="${option}"></option>
                     </select>
                 </div>
             </div>

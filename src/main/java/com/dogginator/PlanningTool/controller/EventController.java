@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -27,7 +28,11 @@ DateService dateService = new DateService();
     public String home(Model model){
         automaticRemoveOldDatesInDatabase();
         List<Event> eventToday = getEventToday();
+        String date = LocalDate.now().toString();
+        String day = LocalDate.now().getDayOfWeek().name();
+        String dayAndDate = day + ", " + date;
         model.addAttribute("eventToday", eventToday);
+        model.addAttribute("dayAndDate", dayAndDate);
         System.out.println(eventToday);
         return "Index"; // TODO WORKS?
     }
@@ -48,7 +53,6 @@ DateService dateService = new DateService();
         String date = event.getDate();
         List<Event> eventList = eventService.findAll();
         List<Event> filterList = eventList.stream().filter(e -> date.equals(e.getDate())).collect(Collectors.toList());
-
         try {
             for(Event event1 : filterList){
                 if(event1.getStartAt() != event.getStartAt() ){
@@ -64,8 +68,9 @@ DateService dateService = new DateService();
         return "redirect:/planningTool";
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public String removeDayInIndex(@PathVariable("id")Integer id ){ //TODO broken
+    //@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @GetMapping("/delete/{id}")
+    public String removeDayInIndex(@PathVariable("id")Integer id ){
         eventService.deleteDay(id);
         return "redirect:/planningTool";
     }
@@ -87,20 +92,11 @@ DateService dateService = new DateService();
 
         model.addAttribute("event", event);
         String date = dateService.planningCheck(event);
-
-        List<Event> eventList = eventService.findAll();
-        List<Event> filterList = eventList.stream().filter(e -> date.equals(e.getDate())).collect(Collectors.toList());
-        System.out.println(eventList);
-        System.out.println("<<<");
-        System.out.println(filterList);
+        event.setDate(date);
         try {
-            for(Event event1 : filterList){
-                if(event1.getStartAt() != event.getStartAt() ){
-                    event.setDate(date);
-                    eventService.createEvent(event);
-                }
-                redirectAttributes.addFlashAttribute("message", "Event has been added");
-            }
+            eventService.createEvent(event);
+            redirectAttributes.addFlashAttribute("message", "Event has been added");
+
         }catch (EventException e){
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "Index";
@@ -165,7 +161,8 @@ DateService dateService = new DateService();
     }
 
 
-    @RequestMapping(value = "/planningTool/remove/plan/{id}", method = RequestMethod.DELETE)
+    //@RequestMapping(value = "/planningTool/remove/plan/{id}", method = RequestMethod.DELETE)
+    @GetMapping("/planningTool/remove/plan/{id}")
     public String removeDay(@PathVariable("id")Integer id ){ //TODO PROBLY BROKEN
         eventService.deleteDay(id);
         return "redirect:/planningTool/weekly";
@@ -195,7 +192,11 @@ DateService dateService = new DateService();
         return eventList.stream()
                 .filter(event -> today.equals(event.getDate())).collect(Collectors.toList());
     }
-
+    private  List<Event> getEventOnDate(String date){
+        List<Event> eventList = eventService.findAll();
+        return eventList.stream()
+                .filter(event -> date.equals(event.getDate())).collect(Collectors.toList());
+    }
     private List<Event> getNextDay(int nextDay){
         List<Event> eventList = eventService.findAll();
         return eventList.stream().filter(event -> dateService.addDaysToDate(nextDay).equals(event.getDate())).collect(Collectors.toList());
