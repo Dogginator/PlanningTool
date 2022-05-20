@@ -35,7 +35,7 @@ DateService dateService = new DateService();
         System.out.println(eventToday);
         return "Index";
     }
-    @RequestMapping(value = "/planningTool/updating/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/updating/{id}", method = RequestMethod.GET)
     public String update(@PathVariable("id")Integer id, Model model){
         List<Integer> startTimeList = getStartTimeList();
         List<Integer> endTimeList = getEndTimeList();
@@ -49,16 +49,12 @@ DateService dateService = new DateService();
     }
     @RequestMapping(value = "/updating/save", method = RequestMethod.POST)
     public String saveUpdating(@ModelAttribute Event event, RedirectAttributes redirectAttributes){
-        String date = event.getDate();
-        List<Event> eventList = eventService.findAll();
-        List<Event> filterList = eventList.stream().filter(e -> date.equals(e.getDate())).collect(Collectors.toList());
+        String date = dateService.planningCheck(event);
+        event.setDate(date);
         try {
-            for(Event event1 : filterList){
-                if(event1.getStartAt() != event.getStartAt() ){
-                    eventService.saveEvent(event);
-                }
-                redirectAttributes.addFlashAttribute("message", "Event has been added");
-            }
+            eventService.saveEvent(event);
+            redirectAttributes.addFlashAttribute("message", "Event has been added");
+
         }catch (EventException e){
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "Updating";// TODO TEST
@@ -67,7 +63,6 @@ DateService dateService = new DateService();
         return "redirect:/planningTool";
     }
 
-    //@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @GetMapping("/delete/{id}")
     public String removeDayInIndex(@PathVariable("id")Integer id ){
         eventService.deleteDay(id);
@@ -140,20 +135,16 @@ DateService dateService = new DateService();
 
     @RequestMapping(value = "/update/save", method = RequestMethod.POST)
     public String saveUpdateWeek(@ModelAttribute("event") Event event, RedirectAttributes redirectAttributes) {
-        String date = event.getDate();
-        List<Event> eventList = eventService.findAll();
-        List<Event> filterList = eventList.stream().filter(e -> date.equals(e.getDate())).collect(Collectors.toList());
+        String date = dateService.planningCheck(event);// TODO fix Try catch in Service layer
+        event.setDate(date);
 
         try {
-            for(Event event1 : filterList){
-                if(event1.getStartAt() != event.getStartAt() ){
-                    eventService.saveEvent(event);
-                }
-                redirectAttributes.addFlashAttribute("message", "Event has been added");
-            }
+            eventService.saveEvent(event);
+            redirectAttributes.addFlashAttribute("message", "Event has been added");
+
         }catch (EventException e){
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "Update";// TODO TEST
+            return "Update";
         }
 
         return "redirect:/planningTool/weekly";
@@ -162,7 +153,7 @@ DateService dateService = new DateService();
 
 
     @GetMapping("/planningTool/remove/plan/{id}")
-    public String removeDay(@PathVariable("id")Integer id ){ //TODO PROBLY BROKEN
+    public String removeDay(@PathVariable("id")Integer id ){
         eventService.deleteDay(id);
         return "redirect:/planningTool/weekly";
     }
