@@ -36,22 +36,21 @@
                 <thead class="table-dark">
                 <tr>
                     <th></th>
-                    <th>Day</th>
-                    <th>Date</th>
-                    <th>Event</th>
                     <th>Start At</th>
+                    <th>Event</th>
                     <th>End At</th>
                 </tr>
                 </thead>
                 <tbody>
+                <div>
+                    <h3 th:object="${dayAndDate}" > [[${dayAndDate}]]</h3>
+                </div>
                 <th:block  th:each="event : ${eventToday}">
                     <tr>
                         <td th:type="hidden">[[${event.dayId}]]</td>
-                        <td>[[${event.day}]]</td>
-                        <td>[[${event.date}]]</td>
+                        <td style='text-align:center; vertical-align:middle'>[[${event.startAt}]]</td>
                         <td>[[${event.eventPlan}]]</td>
-                        <td>[[${event.startAt}]]</td>
-                        <td>[[${event.endAt}]]</td>
+                        <td style='text-align:center; vertical-align:middle'>[[${event.endAt}]]</td>
                         <td >
                             <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
                             <a class="h4"th:href="@{'/delete/' + ${event.dayId}}">Delete</a>

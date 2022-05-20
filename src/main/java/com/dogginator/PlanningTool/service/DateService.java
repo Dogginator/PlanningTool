@@ -1,11 +1,6 @@
 package com.dogginator.PlanningTool.service;
 
 import com.dogginator.PlanningTool.model.Event;
-import org.springframework.stereotype.Service;
-
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -21,20 +16,16 @@ public class DateService {
             fri =  "FRIDAY",
             sat = "SATURDAY",
             sun = "SUNDAY";
-    private final String date = "yyyy-MM-dd";
-    private final DateFormat dateFormat = new SimpleDateFormat(date);
-    private final Date currentDate = new Date();
-    private LocalDateTime localDateTime = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     private String plannedDate;
     private final String currentDay = LocalDate.now().getDayOfWeek().name();
 
     public String planningCheck(Event event){ //Basic logic for Saving Events
         if(event.getDay().equalsIgnoreCase(currentDay)){
             boolean checkWeek = event.isThisWeek();
-            if(checkWeek){// if its next week on the same day or not
+            if(checkWeek == true){// if its next week on the same day or not
                 plannedDate = addDaysToDate(7);// next week
             }else {
-                plannedDate = addDaysToDate(0);//current week
+                plannedDate = LocalDate.now().toString();
             }
             return plannedDate;
         }
@@ -70,20 +61,14 @@ public class DateService {
     }
 
     public String addDaysToDate(int days){ // If a plan is a head of the current date
-        localDateTime = localDateTime.plusDays(days);
-        Date newDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-        plannedDate = dateFormat.format(newDate);
-        return plannedDate;
+        LocalDate localDate = LocalDate.now();
+        localDate = localDate.plusDays(days);
+        return plannedDate = localDate.toString();
     }
 
     public String removeDaysToDate(int day){
-        localDateTime = localDateTime.minusDays(day);
-        Date newDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-        plannedDate = dateFormat.format(newDate);
-        return plannedDate;
-    }
-    public LocalDateTime getToday(){
-        Date currentDate = new Date();
-        return currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDate localDate = LocalDate.now();
+        localDate = localDate.minusDays(day);
+        return plannedDate = localDate.toString();
     }
 }
