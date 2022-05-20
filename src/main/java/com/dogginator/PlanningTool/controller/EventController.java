@@ -35,6 +35,7 @@ DateService dateService = new DateService();
         System.out.println(eventToday);
         return "Index";
     }
+
     @RequestMapping(value = "/updating/{id}", method = RequestMethod.GET)
     public String update(@PathVariable("id")Integer id, Model model){
         List<Integer> startTimeList = getStartTimeList();
@@ -48,7 +49,7 @@ DateService dateService = new DateService();
         return "Updating"; //TODO TEST
     }
     @RequestMapping(value = "/updating/save", method = RequestMethod.POST)
-    public String saveUpdating(@ModelAttribute Event event, RedirectAttributes redirectAttributes){
+    public String saveUpdating(@ModelAttribute("event") Event event, RedirectAttributes redirectAttributes){
         String date = dateService.planningCheck(event);
         event.setDate(date);
         try {
@@ -82,7 +83,7 @@ DateService dateService = new DateService();
     }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("event")  Event event, Model model,  RedirectAttributes redirectAttributes) {
-        System.out.print(event.toString()); //TODO fix Try Catch in Service layer
+        System.out.print(event.toString());
 
         model.addAttribute("event", event);
         String date = dateService.planningCheck(event);

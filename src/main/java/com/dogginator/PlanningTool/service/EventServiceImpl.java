@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -14,9 +15,7 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
-    public void createEvent(Event event) {
-        dayRepo.save(event);
-    }
+    public void createEvent(Event event){dayRepo.save(event);}
 
     @Override
     public Event getEventById(Integer id){return dayRepo.getById(id);}
@@ -28,7 +27,9 @@ public class EventServiceImpl implements EventService {
     public void deleteDay(Integer id){dayRepo.deleteById(id);}
 
     @Override
-    public void saveEvent(Event event){dayRepo.save(event);}
+    public void saveEvent(Event event){
+        dayRepo.save(event);
+    }
 
 
 }
