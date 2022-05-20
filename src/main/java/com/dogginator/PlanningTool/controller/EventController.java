@@ -13,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -34,7 +33,7 @@ DateService dateService = new DateService();
         model.addAttribute("eventToday", eventToday);
         model.addAttribute("dayAndDate", dayAndDate);
         System.out.println(eventToday);
-        return "Index"; // TODO WORKS?
+        return "Index";
     }
     @RequestMapping(value = "/planningTool/updating/{id}", method = RequestMethod.GET)
     public String update(@PathVariable("id")Integer id, Model model){
@@ -48,7 +47,7 @@ DateService dateService = new DateService();
         model.addAttribute("endTimeList", endTimeList);
         return "Updating"; //TODO TEST
     }
-    @RequestMapping(value = "/planningTool/updating/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/updating/save", method = RequestMethod.POST)
     public String saveUpdating(@ModelAttribute Event event, RedirectAttributes redirectAttributes){
         String date = event.getDate();
         List<Event> eventList = eventService.findAll();
@@ -84,11 +83,11 @@ DateService dateService = new DateService();
         model.addAttribute("dayNameList", dayNameList);
         model.addAttribute("startTimeList", startTimeList);
         model.addAttribute("endTimeList", endTimeList);
-        return "Planning";// TODO Works
+        return "Planning";
     }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("event")  Event event, Model model,  RedirectAttributes redirectAttributes) {
-        System.out.print(event.toString()); //TODO BROKEN
+        System.out.print(event.toString()); //TODO fix Try Catch in Service layer
 
         model.addAttribute("event", event);
         String date = dateService.planningCheck(event);
@@ -124,9 +123,9 @@ DateService dateService = new DateService();
         model.addAttribute("sixthDay", sixthDay);
         seventhDay = getNextDay(6);
         model.addAttribute("seventhDay", seventhDay);
-        return "Weekly";// TODO BROKEN
+        return "Weekly";
     }
-    @RequestMapping(value = "/planningTool/weekly/update/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String updateWeek(@PathVariable("id")Integer id, Model model){
         List<Integer> startTimeList = getStartTimeList();
         List<Integer> endTimeList = getEndTimeList();
@@ -139,7 +138,7 @@ DateService dateService = new DateService();
     return "Update"; //TODO TEST
     }
 
-    @RequestMapping(value = "/planningTool/weekly/update/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/save", method = RequestMethod.POST)
     public String saveUpdateWeek(@ModelAttribute("event") Event event, RedirectAttributes redirectAttributes) {
         String date = event.getDate();
         List<Event> eventList = eventService.findAll();
@@ -161,14 +160,14 @@ DateService dateService = new DateService();
     }
 
 
-    //@RequestMapping(value = "/planningTool/remove/plan/{id}", method = RequestMethod.DELETE)
+
     @GetMapping("/planningTool/remove/plan/{id}")
     public String removeDay(@PathVariable("id")Integer id ){ //TODO PROBLY BROKEN
         eventService.deleteDay(id);
         return "redirect:/planningTool/weekly";
     }
 
-    private void automaticRemoveOldDatesInDatabase(){
+    private void automaticRemoveOldDatesInDatabase(){//TODO See if this works
         List<Event> eventList = eventService.findAll();
         if(eventList.size() != 0){
             List<Event> removalDays = eventList.stream()
@@ -191,11 +190,6 @@ DateService dateService = new DateService();
         List<Event> eventList = eventService.findAll();
         return eventList.stream()
                 .filter(event -> today.equals(event.getDate())).collect(Collectors.toList());
-    }
-    private  List<Event> getEventOnDate(String date){
-        List<Event> eventList = eventService.findAll();
-        return eventList.stream()
-                .filter(event -> date.equals(event.getDate())).collect(Collectors.toList());
     }
     private List<Event> getNextDay(int nextDay){
         List<Event> eventList = eventService.findAll();
