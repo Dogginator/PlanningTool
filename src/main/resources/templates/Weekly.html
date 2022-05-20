@@ -11,7 +11,7 @@
                                                )}">
 
 <head>
-    <title>DashBoard</title>
+    <title>Update</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <th:block id="home-static-resources">
         <script type="text/javascript" src="../static/home.js" th:src="@{/home.js}"></script>
@@ -227,8 +227,8 @@
                 <td>[[${event.startAt}]]</td>
                 <td>[[${event.endAt}]]</td>
                 <td >
-                    <a class="h4 mr-3" th:href="@{'/planningTool/updateEvent/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/index/delete/' + ${event.dayId}}">Delete</a>
+                    <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
+                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
                 </td>
             </tr>
         </th:block>

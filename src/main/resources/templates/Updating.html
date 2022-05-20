@@ -11,7 +11,7 @@
 <body>
 <div id="home-main-content" class="container-fluid">
     <div class="text-center"><h2>Update</h2></div>
-    <form th:action="@{/planningTool/updating/save}" method="post" th:object="${event}"
+    <form th:action="@{/updating/save}" method="post" th:object="${event}"
           style="max-width: 500px; margin: 0 auto;">
         <div class="border border-secondary rounded p-3">
             <div class="form-group row">
@@ -63,7 +63,7 @@
 </div>
 <script type="text/javascript">
     function cancelForm(){
-        window.location = "[[@{/Weekly}]]";
+        window.location = "[[@{/Index}]]";
     }
 </script>
 </body>
