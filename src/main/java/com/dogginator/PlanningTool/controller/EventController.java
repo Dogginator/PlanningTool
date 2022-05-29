@@ -49,7 +49,7 @@ public class EventController {
         model.addAttribute("dayNameList", dayNameList);
         model.addAttribute("startTimeList", startTimeList);
         model.addAttribute("endTimeList", endTimeList);
-        return "Updating"; //TODO TEST
+        return "Updating";
     }
     @RequestMapping(value = "/updating/save", method = RequestMethod.POST)
     public String saveUpdating(@ModelAttribute("event") Event event, RedirectAttributes redirectAttributes){
@@ -61,10 +61,15 @@ public class EventController {
 
         }catch (EventException e){
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "Updating";// TODO TEST
+            return "redirect:/planningTool";
         }
-
-        return "redirect:/planningTool";
+        if(currentDay.equals(event.getDay())){
+            return "redirect:/planningTool";
+        }else if(!currentDay.equals(event.getDay())){
+            return "redirect:/planningTool";
+        }else{
+            return "Updating";
+        }
     }
 
     @GetMapping("/delete/{id}")
@@ -135,12 +140,12 @@ public class EventController {
         model.addAttribute("dayNameList", dayNameList);
         model.addAttribute("startTimeList", startTimeList);
         model.addAttribute("endTimeList", endTimeList);
-    return "Update"; //TODO TEST
+    return "Update";
     }
 
     @RequestMapping(value = "/update/save", method = RequestMethod.POST)
     public String saveUpdateWeek(@ModelAttribute("event") Event event, RedirectAttributes redirectAttributes) {
-        String date = dateService.planningCheck(event);// TODO fix Try catch in Service layer
+        String date = dateService.planningCheck(event);
         event.setDate(date);
         try {
             eventService.saveEvent(event);
@@ -148,10 +153,15 @@ public class EventController {
 
         }catch (EventException e){
             redirectAttributes.addFlashAttribute("message", e.getMessage());
-            return "Update";
+            return "redirect:/planningTool/weekly";
         }
-
-        return "redirect:/planningTool/weekly";
+        if(currentDay.equals(event.getDay())){
+            return "redirect:/planningTool/weekly";
+        }else if(!currentDay.equals(event.getDay())){
+            return "redirect:/planningTool/weekly";
+        }else {
+            return "Weekly";
+        }
     }
 
 

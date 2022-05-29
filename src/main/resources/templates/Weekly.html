@@ -21,6 +21,9 @@
 <body>
 <div id="home-header">
     Welcome to PlanningTool v0.1
+    <div th:if="${message}" class="alert alert-success text-center" id="alert">
+        [[${message}]]
+    </div>
 </div>
 <div id="home-nav" th:replace="~{/fragments/app-fragments :: nav-Home}">
     Menu - Week
