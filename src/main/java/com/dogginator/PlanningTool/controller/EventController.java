@@ -106,7 +106,7 @@ public class EventController {
             }else if(!event.getDay().equals(currentDay)){
                 return "redirect:/planningTool/weekly";
             }
-            return "/Index";
+            return "Index";
 
     }
 
