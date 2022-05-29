@@ -11,4 +11,5 @@ public interface EventService {
     void createEvent(Event event) throws EventException;
     Event getEventById(Integer id);
     void saveEvent(Event event)throws EventException;
+    void automaticRemoveOldDatesInDatabase( List<Event> eventList);
 }

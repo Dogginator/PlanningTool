@@ -43,6 +43,9 @@ footer {
     text-align: center;
     color: white;
 }
+#alert {
+ color: red;
+}
 @media ( max-width : 600px) {
     nav, article {
         width: 100%;

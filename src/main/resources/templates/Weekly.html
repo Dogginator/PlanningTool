@@ -27,214 +27,229 @@
 </div>
 
 <div id="home-main-content">
-    <div>
-        <div>
+    <div th:if ="${not #lists.isEmpty(firstDay)}">
+        <table class="table table-bordered" )>
+            <thead class="table-dark">
+            <tr>
+                <th></th>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Start At</th>
+                <th>End At</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="event : ${firstDay}">
+                <tr>
+                    <td th:type="hidden">[[${event.dayId}]]</td>
+                    <td>[[${event.day}]]</td>
+                    <td>[[${event.date}]]</td>
+                    <td>[[${event.eventPlan}]]</td>
+                    <td>[[${event.startAt}]]</td>
+                    <td>[[${event.endAt}]]</td>
+                    <td >
+                        <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
+                        <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
 
-        </div>
+        </table>
     </div>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th></th>
-            <th>Day</th>
-            <th>Date</th>
-            <th>Event</th>
-            <th>Start At</th>
-            <th>End At</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="event : ${firstDay}">
-            <tr>
-                <td th:type="hidden">[[${event.dayId}]]</td>
-                <td>[[${event.day}]]</td>
-                <td>[[${event.date}]]</td>
-                <td>[[${event.eventPlan}]]</td>
-                <td>[[${event.startAt}]]</td>
-                <td>[[${event.endAt}]]</td>
-                <td >
-                    <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
-                </td>
-            </tr>
-        </th:block>
-        </tbody>
 
-    </table>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th></th>
-            <th>Day</th>
-            <th>Date</th>
-            <th>Event</th>
-            <th>Start At</th>
-            <th>End At</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="event : ${secondDay}">
+    <div th:if ="${not #lists.isEmpty(secondDay)}">
+        <table class="table table-bordered">
+            <thead class="table-dark">
             <tr>
-                <td th:type="hidden">[[${event.dayId}]]</td>
-                <td>[[${event.day}]]</td>
-                <td>[[${event.date}]]</td>
-                <td>[[${event.eventPlan}]]</td>
-                <td>[[${event.startAt}]]</td>
-                <td>[[${event.endAt}]]</td>
-                <td >
-                    <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
-                </td>
+                <th></th>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Start At</th>
+                <th>End At</th>
             </tr>
-        </th:block>
-        </tbody>
+            </thead>
+            <tbody>
+            <th:block th:each="event : ${secondDay}">
+                <tr>
+                    <td th:type="hidden">[[${event.dayId}]]</td>
+                    <td>[[${event.day}]]</td>
+                    <td>[[${event.date}]]</td>
+                    <td>[[${event.eventPlan}]]</td>
+                    <td>[[${event.startAt}]]</td>
+                    <td>[[${event.endAt}]]</td>
+                    <td >
+                        <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
+                        <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
 
-    </table>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th></th>
-            <th>Day</th>
-            <th>Date</th>
-            <th>Event</th>
-            <th>Start At</th>
-            <th>End At</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="event : ${thirdDay}">
+        </table>
+    </div>
+
+    <div th:if ="${not #lists.isEmpty(thirdDay)}">
+        <table class="table table-bordered">
+            <thead class="table-dark">
             <tr>
-                <td th:type="hidden">[[${event.dayId}]]</td>
-                <td>[[${event.day}]]</td>
-                <td>[[${event.date}]]</td>
-                <td>[[${event.eventPlan}]]</td>
-                <td>[[${event.startAt}]]</td>
-                <td>[[${event.endAt}]]</td>
-                <td >
-                    <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
-                </td>
+                <th></th>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Start At</th>
+                <th>End At</th>
             </tr>
-        </th:block>
-        </tbody>
+            </thead>
+            <tbody>
+            <th:block th:each="event : ${thirdDay}">
+                <tr>
+                    <td th:type="hidden">[[${event.dayId}]]</td>
+                    <td>[[${event.day}]]</td>
+                    <td>[[${event.date}]]</td>
+                    <td>[[${event.eventPlan}]]</td>
+                    <td>[[${event.startAt}]]</td>
+                    <td>[[${event.endAt}]]</td>
+                    <td >
+                        <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
+                        <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
 
-    </table>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th></th>
-            <th>Day</th>
-            <th>Date</th>
-            <th>Event</th>
-            <th>Start At</th>
-            <th>End At</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="event : ${fourthDay}">
+        </table>
+    </div>
+
+    <div th:if ="${not #lists.isEmpty(fourthDay)}">
+        <table class="table table-bordered">
+            <thead class="table-dark">
             <tr>
-                <td th:type="hidden">[[${event.dayId}]]</td>
-                <td>[[${event.day}]]</td>
-                <td>[[${event.date}]]</td>
-                <td>[[${event.eventPlan}]]</td>
-                <td>[[${event.startAt}]]</td>
-                <td>[[${event.endAt}]]</td>
-                <td >
-                    <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
-                </td>
+                <th></th>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Start At</th>
+                <th>End At</th>
             </tr>
-        </th:block>
-        </tbody>
+            </thead>
+            <tbody>
+            <th:block th:each="event : ${fourthDay}">
+                <tr>
+                    <td th:type="hidden">[[${event.dayId}]]</td>
+                    <td>[[${event.day}]]</td>
+                    <td>[[${event.date}]]</td>
+                    <td>[[${event.eventPlan}]]</td>
+                    <td>[[${event.startAt}]]</td>
+                    <td>[[${event.endAt}]]</td>
+                    <td >
+                        <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
+                        <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
 
-    </table>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th></th>
-            <th>Day</th>
-            <th>Date</th>
-            <th>Event</th>
-            <th>Start At</th>
-            <th>End At</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="event : ${fifthDay}">
+        </table>
+    </div>
+
+    <div th:if ="${not #lists.isEmpty(fifthDay)}">
+        <table class="table table-bordered">
+            <thead class="table-dark">
             <tr>
-                <td th:type="hidden">[[${event.dayId}]]</td>
-                <td>[[${event.day}]]</td>
-                <td>[[${event.date}]]</td>
-                <td>[[${event.eventPlan}]]</td>
-                <td>[[${event.startAt}]]</td>
-                <td>[[${event.endAt}]]</td>
-                <td >
-                    <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
-                </td>
+                <th></th>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Start At</th>
+                <th>End At</th>
             </tr>
-        </th:block>
-        </tbody>
+            </thead>
+            <tbody>
+            <th:block th:each="event : ${fifthDay}">
+                <tr>
+                    <td th:type="hidden">[[${event.dayId}]]</td>
+                    <td>[[${event.day}]]</td>
+                    <td>[[${event.date}]]</td>
+                    <td>[[${event.eventPlan}]]</td>
+                    <td>[[${event.startAt}]]</td>
+                    <td>[[${event.endAt}]]</td>
+                    <td >
+                        <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
+                        <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
 
-    </table>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th></th>
-            <th>Day</th>
-            <th>Date</th>
-            <th>Event</th>
-            <th>Start At</th>
-            <th>End At</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="event : ${sixthDay}">
+        </table>
+    </div>
+
+    <div th:if ="${not #lists.isEmpty(sixthDay)}">
+        <table class="table table-bordered">
+            <thead class="table-dark">
             <tr>
-                <td th:type="hidden">[[${event.dayId}]]</td>
-                <td>[[${event.day}]]</td>
-                <td>[[${event.date}]]</td>
-                <td>[[${event.eventPlan}]]</td>
-                <td>[[${event.startAt}]]</td>
-                <td>[[${event.endAt}]]</td>
-                <td >
-                    <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
-                </td>
+                <th></th>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Start At</th>
+                <th>End At</th>
             </tr>
-        </th:block>
-        </tbody>
+            </thead>
+            <tbody>
+            <th:block th:each="event : ${sixthDay}">
+                <tr>
+                    <td th:type="hidden">[[${event.dayId}]]</td>
+                    <td>[[${event.day}]]</td>
+                    <td>[[${event.date}]]</td>
+                    <td>[[${event.eventPlan}]]</td>
+                    <td>[[${event.startAt}]]</td>
+                    <td>[[${event.endAt}]]</td>
+                    <td >
+                        <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
+                        <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
 
-    </table>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th></th>
-            <th>Day</th>
-            <th>Date</th>
-            <th>Event</th>
-            <th>Start At</th>
-            <th>End At</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="event : ${seventhDay}">
+        </table>
+    </div>
+
+    <div th:if ="${not #lists.isEmpty(seventhDay)}">
+        <table class="table table-bordered">
+            <thead class="table-dark">
             <tr>
-                <td th:type="hidden">[[${event.dayId}]]</td>
-                <td>[[${event.day}]]</td>
-                <td>[[${event.date}]]</td>
-                <td>[[${event.eventPlan}]]</td>
-                <td>[[${event.startAt}]]</td>
-                <td>[[${event.endAt}]]</td>
-                <td >
-                    <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
-                    <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
-                </td>
+                <th></th>
+                <th>Day</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Start At</th>
+                <th>End At</th>
             </tr>
-        </th:block>
-        </tbody>
+            </thead>
+            <tbody>
+            <th:block th:each="event : ${seventhDay}">
+                <tr>
+                    <td th:type="hidden">[[${event.dayId}]]</td>
+                    <td>[[${event.day}]]</td>
+                    <td>[[${event.date}]]</td>
+                    <td>[[${event.eventPlan}]]</td>
+                    <td>[[${event.startAt}]]</td>
+                    <td>[[${event.endAt}]]</td>
+                    <td >
+                        <a class="h4 mr-3" th:href="@{'/update/' + ${event.dayId}}">Edit</a>
+                        <a class="h4"th:href="@{'/planningTool/remove/plan/' + ${event.dayId}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
 
-    </table>
+        </table>
+    </div>
 </div>
 <div id="home-footer" th:replace="~{/fragments/app-fragments :: copyright}">
     Footer
