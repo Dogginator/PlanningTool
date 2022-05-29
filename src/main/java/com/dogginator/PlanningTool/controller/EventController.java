@@ -13,12 +13,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class EventController {
     DateService dateService = new DateService();
     ListService listService = new ListService();
+    String currentDay = LocalDate.now().getDayOfWeek().name();
 
 
     @Autowired
@@ -85,7 +85,7 @@ public class EventController {
         return "Planning";
     }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("event")  Event event, Model model,  RedirectAttributes redirectAttributes) throws EventException {
+    public String save(@ModelAttribute("event")  Event event, Model model,  RedirectAttributes redirectAttributes){
         model.addAttribute("event", event);
         String date = dateService.planningCheck(event);
         event.setDate(date);
@@ -94,9 +94,14 @@ public class EventController {
                 redirectAttributes.addFlashAttribute("message", "Event has been added");
             }catch (EventException e){
                 redirectAttributes.addFlashAttribute("message", e.getMessage());
-                return "Index";
+                return "redirect:/planningTool";
             }
-            return "redirect:/planningTool";
+            if(event.getDay().equals(currentDay)){
+                return "redirect:/planningTool";
+            }else if(!event.getDay().equals(currentDay)){
+                return "redirect:/planningTool/weekly";
+            }
+            return "/Index";
 
     }
 

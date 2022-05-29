@@ -25,7 +25,7 @@ public class EventServiceImpl implements EventService {
         if(tryList.size() != 0){
             for(Event event1 : tryList){
                 if(event1.getStartAt().equals(event.getStartAt())){
-                    throw new EventException("this time at give date is taken " + "date: " + event.getDate() + " start time: " + event.getStartAt() );
+                    throw new EventException("ERROR: The time: "+ event.getStartAt() + " , At given date: " + event.getDate() +  ", is already booked by another event");
 
                 }
             }
@@ -51,7 +51,7 @@ public class EventServiceImpl implements EventService {
         if(tryList.size() != 0){
             for(Event event1 : tryList){
                 if(event1.getStartAt().equals(event.getStartAt())){
-                    throw new EventException("this time at give date is taken " + "date: " + event.getDate() + " start time: " + event.getStartAt() );
+                    throw new EventException("ERROR: The time: "+ event.getStartAt() + " , At given date: " + event.getDate() +  ", is already booked by another event");
 
                 }
             }
