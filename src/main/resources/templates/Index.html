@@ -18,10 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../static/home.css" th:href="@{/home.css}"/>
     </th:block>
 </head>
-<div th:if="${message}" class="alert alert-success text-center">
+
+<body>
+<div th:if="${message}" class="alert alert-success text-center" id="alert">
     [[${message}]]
 </div>
-<body>
 <div id="home-header">
     Welcome to PlanningTool v0.1
 </div>
@@ -32,34 +33,35 @@
 <div id="home-main-content" class="container" >
     <div class="row"  >
         <div class="col-lg-10 mt-5 mb-5" >
-            <table class="table table-bordered"  >
-                <thead class="table-dark">
-                <tr>
-                    <th></th>
-                    <th>Start At</th>
-                    <th>Event</th>
-                    <th>End At</th>
-                </tr>
-                </thead>
-                <tbody>
-                <div>
-                    <h3 th:object="${dayAndDate}" > [[${dayAndDate}]]</h3>
-                </div>
-                <th:block  th:each="event : ${eventToday}">
+            <div th:if ="${not #lists.isEmpty(eventToday)}">
+                <table class="table table-bordered"  >
+                    <thead class="table-dark">
                     <tr>
-                        <td th:type="hidden">[[${event.dayId}]]</td>
-                        <td style='text-align:center; vertical-align:middle'>[[${event.startAt}]]</td>
-                        <td>[[${event.eventPlan}]]</td>
-                        <td style='text-align:center; vertical-align:middle'>[[${event.endAt}]]</td>
-                        <td >
-                            <a class="h4 mr-3" th:href="@{'/updating/' + ${event.dayId}}">Edit</a>
-                            <a class="h4"th:href="@{'/delete/' + ${event.dayId}}">Delete</a>
-                        </td>
+                        <th></th>
+                        <th>Start At</th>
+                        <th>Event</th>
+                        <th>End At</th>
                     </tr>
-                </th:block>
-                </tbody>
-
-            </table>
+                    </thead>
+                    <tbody>
+                    <div>
+                        <h3 th:object="${dayAndDate}" > [[${dayAndDate}]]</h3>
+                    </div>
+                    <th:block  th:each="event : ${eventToday}">
+                        <tr>
+                            <td th:type="hidden">[[${event.dayId}]]</td>
+                            <td style='text-align:center; vertical-align:middle'>[[${event.startAt}]]</td>
+                            <td>[[${event.eventPlan}]]</td>
+                            <td style='text-align:center; vertical-align:middle'>[[${event.endAt}]]</td>
+                            <td >
+                                <a class="h4 mr-3" th:href="@{'/updating/' + ${event.dayId}}">Edit</a>
+                                <a class="h4"th:href="@{'/delete/' + ${event.dayId}}">Delete</a>
+                            </td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
